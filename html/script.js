@@ -119,7 +119,6 @@ let firstDraw = true;
 let darkerColors = false;
 let autoselect = false;
 let nogpsOnly = false;
-let spritesDataURL = null;
 let trace_hist_only = false;
 let traces_high_res = false;
 let show_rId = true;
@@ -333,7 +332,7 @@ function fetchFail(jqxhr, status, error) {
         checkMovement();
     }
     status = jqxhr.status;
-    if (jqxhr.readyState == 0) error = "Can't connect to server, check your network!";
+    if (jqxhr.readyState == 0) error = "无法连接到服务器，请检查您的网络！";
     let errText = status + (error ? (": " + error) : "");
     console.log(jqxhr);
     console.log(error);
@@ -431,7 +430,7 @@ function fetchDone(data) {
     if (last == now && !globeIndex) {
         StaleReceiverCount++;
         if (StaleReceiverCount > 5) {
-            jQuery("#update_error_detail").text("The data from the server hasn't been updated in a while.");
+            jQuery("#update_error_detail").text("来自服务器的数据已经有一段时间没有更新了。");
             jQuery("#update_error").css('display','block');
         }
     } else if (StaleReceiverCount > 0){
@@ -658,7 +657,6 @@ function fetchData(options) {
 // kicks off the whole rabbit hole
 function initialize() {
     if (usp.has('iconTest')) {
-        jQuery('#iconTestCanvas').show();
         iconTest();
         return;
     }
@@ -1192,7 +1190,7 @@ function initPage() {
     });
     new Toggle({
         key: "labelsGeom",
-        display: "Labels: geom. alt. (WGS84)",
+        display: "标签: 实际高度 (WGS84)",
         container: "#settingsLeft",
         init: labelsGeom,
         setState: function(state) {
@@ -1205,7 +1203,7 @@ function initPage() {
     });
     new Toggle({
         key: "geomUseEGM",
-        display: "Geom. alt.: WGS84 -> EGM conversion (long load)",
+        display: "实际高度 WGS84到EGM（地球重力模型）的转换（加载时间长）",
         container: "#settingsLeft",
         init: geomUseEGM,
         setState: function(state) {
@@ -1244,7 +1242,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesLive",
-        display: "Live track labels: UTC",
+        display: "实时航迹标签：UTC协调世界时",
         container: "#settingsLeft",
         init: utcTimesLive,
         setState: function(state) {
@@ -1256,7 +1254,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesHistoric",
-        display: "Historic track labels: UTC",
+        display: "历史航迹标签：UTC协调世界时",
         container: "#settingsLeft",
         init: utcTimesHistoric,
         setState: function(state) {
@@ -1268,7 +1266,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "windLabelsSlim",
-        display: "Smaller wind labels",
+        display: "较小的风标签",
         container: "#settingsLeft",
         init: windLabelsSlim,
         setState: function(state) {
@@ -1283,7 +1281,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "showLabelUnits",
-        display: "Label units",
+        display: "标签单元",
         container: "#settingsLeft",
         init: showLabelUnits,
         setState: function(state) {
@@ -1308,7 +1306,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "shareFilters",
-        display: "Include Filters In URLs",
+        display: "在URL中包含过滤器",
         container: "#settingsRight",
         init: false,
         setState: function(state) {
@@ -1318,7 +1316,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "debugTracks",
-        display: "Debug Tracks",
+        display: "调整航迹",
         container: "#settingsRight",
         init: false,
         setState: function(state) {
@@ -1329,7 +1327,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "debugAll",
-        display: "Debug show all",
+        display: "调整所有显示",
         container: "#settingsRight",
         init: false,
         setState: function(state) {
@@ -1356,7 +1354,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "updateLocation",
-        display: "Update GPS location",
+        display: "更新GPS位置",
         container: "#settingsRight",
         init: updateLocation,
         setState: function(state) {
@@ -1367,7 +1365,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "autoselect",
-        display: "Auto-select plane",
+        display: "自动选择飞机",
         container: "#settingsRight",
         init: autoselect,
         setState: function(state) {
@@ -1382,7 +1380,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "ColoredPlanes",
-        display: "Colored Planes",
+        display: "彩色飞机图标",
         container: "#settingsRight",
         init: true,
         setState: function(state) {
@@ -1397,7 +1395,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "ColoredTrails",
-        display: "Colored Trails",
+        display: "彩色飞机航迹",
         container: "#settingsRight",
         init: true,
         setState: function(state) {
@@ -1499,7 +1497,7 @@ jQuery('#selected_altitude_geom1')
     }
     new Toggle({
         key: "planespottingAPI",
-        display: "Pictures planespotting.be",
+        display: "planespotting.be的图片",
         container: "#settingsRight",
         init: planespottingAPI,
         setState: function(state) {
@@ -1513,7 +1511,7 @@ jQuery('#selected_altitude_geom1')
     });
     new Toggle({
         key: "planespottersAPI",
-        display: "Pictures planespotters.net",
+        display: "planespotters.net的图片",
         container: "#settingsRight",
         init: planespottersAPI,
         setState: function(state) {
@@ -1528,7 +1526,7 @@ jQuery('#selected_altitude_geom1')
     if (useRouteAPI) {
         new Toggle({
             key: "useRouteAPI",
-            display: "Lookup route",
+            display: "查找航线",
             container: "#settingsRight",
             init: useRouteAPI,
             setState: function(state) {
@@ -1540,7 +1538,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "enableInfoblock",
-        display: "Enable Infoblock",
+        display: "启用左侧信息模块",
         container: "#settingsRight",
         init: true,
         setState: function(state) {
@@ -1550,7 +1548,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "wideInfoblock",
-        display: "Wide Infoblock",
+        display: "更宽的信息模块",
         container: "#settingsRight",
         init: wideInfoBlock,
         setState: function(state) {
@@ -1566,7 +1564,7 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "enableMouseover",
-        display: "Enable mouse-over block",
+        display: "启用鼠标悬停信息模块",
         container: "#settingsRight",
         init: enableMouseover,
         setState: function(state) {
@@ -2022,13 +2020,11 @@ function webglAddLayer() {
         alt_baro: 25000, });
     let plane = g.planes['~c0ffee'];
 
-    let spriteSrc = spritesDataURL ? spritesDataURL : 'images/sprites.png';
-    //console.log(spriteSrc);
     try {
         let glStyle = {
             symbol: {
                 symbolType: 'image',
-                src: spriteSrc,
+                src: 'images/sprites.png',
                 size: [ 'get', 'size' ],
                 offset: [0, 0],
                 textureCoord: [ 'array',
@@ -2069,7 +2065,7 @@ function webglAddLayer() {
         webglLayer = new ol.layer.WebGLPoints({
             name: 'webglLayer',
             type: 'overlay',
-            title: 'Aircraft pos. webGL',
+            title: '航班位置WebGL',
             source: webglFeatures,
             declutter: false,
             zIndex: 200,
@@ -2120,7 +2116,7 @@ function webglInit() {
     }
     new Toggle({
         key: "webgl",
-        display: "WebGL",
+        display: "WebGL图形渲染",	
         container: "#settingsRight",
         init: init,
         setState: function(state) {
@@ -2157,13 +2153,6 @@ function webglInit() {
 }
 
 function ol_map_init() {
-
-    if (0) {
-        let canvas = iconTest();
-        spritesDataURL = canvas.toDataURL();
-        jQuery('#iconTestCanvas').remove();
-        console.log(spritesDataURL);
-    }
 
     OLMap = new ol.Map({
         target: 'map_canvas',
@@ -2375,7 +2364,7 @@ function initMap() {
     siteCircleLayer = new ol.layer.Vector({
         name: 'siteCircles',
         type: 'overlay',
-        title: 'Range rings',
+        title: '测距环',
         source: siteCircleFeatures,
         visible: SiteCircles,
         zIndex: 100,
@@ -2393,7 +2382,7 @@ function initMap() {
     locationDotLayer = new ol.layer.Vector({
         name: 'locationDot',
         type: 'overlay',
-        title: (receiverJson && receiverJson.lat != null) ? 'Site position' : 'Your position',
+        title: (receiverJson && receiverJson.lat != null) ? '站点位置' : 'Your position',
         source: locationDotFeatures,
         visible: SiteShow,
         zIndex: 100,
@@ -2422,7 +2411,7 @@ function initMap() {
         actualOutlineLayer = new ol.layer.Vector({
             name: 'actualRangeOutline',
             type: 'overlay',
-            title: 'actual range outline',
+            title: '实际接收范围',
             source: actualOutlineFeatures,
             zIndex: 101,
             renderBuffer: renderBuffer,
@@ -2435,7 +2424,7 @@ function initMap() {
         calcOutlineLayer = new ol.layer.Vector({
             name: 'calcOutline',
             type: 'overlay',
-            title: 'terrain-based range outline',
+            title: '基于地形的范围轮廓',
             source: calcOutlineFeatures,
             zIndex: 100,
             renderOrder: null,
@@ -2455,7 +2444,7 @@ function initMap() {
 
     trailLayers = new ol.layer.Group({
         name: 'ac_trail',
-        title: 'Aircraft trails',
+        title: '飞机航迹',
         type: 'overlay',
         layers: trailGroup,
         zIndex: 150,
@@ -2466,7 +2455,7 @@ function initMap() {
     iconLayer = new ol.layer.Vector({
         name: 'iconLayer',
         type: 'overlay',
-        title: 'Aircraft positions',
+        title: '航班位置',
         source: PlaneIconFeatures,
         declutter: false,
         zIndex: 200,
@@ -2499,7 +2488,7 @@ function initMap() {
 
     new Toggle({
         key: "darkerColors",
-        display: "Darker Colors",
+        display: "深色模式",
         container: "#settingsLeft",
         init: darkerColors,
         setState: function(state) {
@@ -2527,7 +2516,7 @@ function initMap() {
     }
     new Toggle({
         key: "darkMode",
-        display: "Dark Mode",
+        display: "夜间模式",
         container: "#settingsLeft",
         init: darkModeDefault,
         setState: function(state) {
@@ -2575,7 +2564,7 @@ function initMap() {
 
     new Toggle({
         key: "MapDim",
-        display: "Dim Map",
+        display: "模糊地图",
         container: "#settingsLeft",
         init: MapDim,
         setState: function(state) {
@@ -3331,9 +3320,9 @@ function refreshSelected() {
         jQuery('#selected_nic_baro').updateText("n/a");
     } else {
         if (selected.nic_baro == 1) {
-            jQuery('#selected_nic_baro').updateText("cross-checked");
+            jQuery('#selected_nic_baro').updateText("交叉检查");
         } else {
-            jQuery('#selected_nic_baro').updateText("not cross-checked");
+            jQuery('#selected_nic_baro').updateText("未进行交叉检查");
         }
     }
 
@@ -3546,14 +3535,14 @@ function refreshFeatures() {
     const cols = planeMan.cols = {};
 
     cols.icao = {
-        text: 'Hex ID',
+        text: '十六进制ID',
         sort: function () { sortBy('icao', compareAlpha, function(x) { return x.icao; }); },
         value: function(plane) { return plane.icao; },
         td: '<td class="icaoCodeColumn">',
     };
     cols.flag = {
-        text: 'Flag',
-        header: function() { return ""; },
+        text: '旗帜',
+        header: function() { return "旗帜"; },
         sort: function () { sortBy('country', compareAlpha, function(x) { return x.country; }); },
         value: function(plane) { return (plane.flag_image ? ('<img width="20" height="12" style="display: block;margin: auto;" src="' + FlagPath + plane.flag_image + '" title="' + plane.country + '"></img>') : ''); },
         hStyle: 'style="width: 20px; padding: 3px;"',
@@ -3567,89 +3556,89 @@ function refreshFeatures() {
             return (plane.flight || '');
         },
         html: flightawareLinks,
-        text: 'Callsign' };
+        text: '呼号' };
     if (useRouteAPI) {
         cols.route = {
             sort: function () { sortBy('route', compareAlpha, function(x) { return x.routeString }); },
             value: function(plane) {
                 return ((useRouteAPI && plane.routeString) || '');
             },
-            text: 'Route' };
+            text: '路线' };
     }
     cols.registration = {
         sort: function () { sortBy('registration', compareAlpha, function(x) { return x.registration; }); },
         value: function(plane) { return (flightawareLinks ? getFlightAwareIdentLink(plane.registration, plane.registration) : (plane.registration ? plane.registration : "")); },
         html: flightawareLinks,
-        text: 'Registration' };
+        text: '注册号' };
     cols.aircraft_type = {
         sort: function () { sortBy('type', compareAlpha, function(x) { return x.icaoType; }); },
         value: function(plane) { return (plane.icaoType != null ? plane.icaoType : ""); },
-        text: 'Type' };
+        text: '机型' };
     cols.squawk = {
-        text: 'Squawk',
+        text: '应答机',
         sort: function () { sortBy('squawk', compareAlpha, function(x) { return x.squawk; }); },
         value: function(plane) { return (plane.squawk != null ? plane.squawk : ""); },
         align: 'right' };
     cols.altitude = {
-        text: 'Altitude',
+        text: '高度',
         sort: function () { sortBy('altitude',compareNumeric, function(x) { return (x.altitude == "ground" ? -100000 : x.altitude); }); },
         value: function(plane) { return format_altitude_brief(plane.altitude, plane.vert_rate, DisplayUnits); },
         align: 'right',
-        header: function () { return 'Alt.' + NBSP + '(' + get_unit_label("altitude", DisplayUnits) + ')';},
+        header: function () { return '高度' + NBSP + '(' + get_unit_label("altitude", DisplayUnits) + ')';},
     };
     cols.speed = {
-        text: pTracks ? 'Max. Speed' : 'Speed',
+        text: pTracks ? '最大速度' : '速度',
         sort: function () { sortBy('speed', compareNumeric, function(x) { return x.speed; }); },
         value: function(plane) { return format_speed_brief(plane.speed, DisplayUnits); },
         align: 'right',
-        header: function () { return (pTracks ? 'Max. ' : '') + 'Spd.' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')';},
+        header: function () { return (pTracks ? '最大' : '') + '速度' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')';},
     };
     cols.vert_rate = {
-        text: 'Vertical Rate',
+        text: '垂直速率',
         sort: function () { sortBy('vert_rate', compareNumeric, function(x) { return x.vert_rate; }); },
         value: function(plane) { return format_vert_rate_brief(plane.vert_rate, DisplayUnits); },
         align: 'right',
-        header: function () { return 'V. Rate(' + get_unit_label("verticalRate", DisplayUnits) + ')';},
+        header: function () { return '垂直速率(' + get_unit_label("verticalRate", DisplayUnits) + ')';},
     };
     cols.distance = {
-        text: pTracks ? 'Max. Distance' : 'Distance',
+        text: pTracks ? '最大距离' : '距离',
         sort: function () { sortBy('sitedist',compareNumeric, function(x) { return x.sitedist; }); },
         value: function(plane) { return format_distance_brief(plane.sitedist, DisplayUnits); },
         align: 'right',
-        header: function () { return (pTracks ? 'Max. ' : '') + 'Dist.' + NBSP + '(' + get_unit_label("distance", DisplayUnits) + ')';},
+        header: function () { return (pTracks ? '最大' : '') + '距离' + NBSP + '(' + get_unit_label("distance", DisplayUnits) + ')';},
     };
     cols.track = {
-        text: 'Track',
+        text: '航向',
         sort: function () { sortBy('track', compareNumeric, function(x) { return x.track; }); },
         value: function(plane) { return format_track_brief(plane.track); },
         align: 'right' };
     cols.msgs = {
-        text: 'Messages',
+        text: '消息数',
         sort: function () { sortBy('msgs', compareNumeric, function(x) { return x.messages; }); },
         value: function(plane) { return plane.messages; },
         align: 'right' };
     cols.seen = {
-        text: 'Seen',
+        text: '查看次数',
         sort: function () { sortBy('seen', compareNumeric, function(x) { return x.seen; }); },
         value: function(plane) { return plane.seen.toFixed(0); },
         align: 'right' };
     cols.rssi = {
-        text: 'RSSI',
+        text: '信号强度',
         sort: function () { sortBy('rssi', compareNumeric, function(x) { return x.rssi; }); },
         value: function(plane) { return (plane.rssi != null ? plane.rssi.toFixed(1) : ""); },
         align: 'right' };
     cols.lat = {
-        text: 'Latitude',
+        text: '纬度',
         sort: function () { sortBy('lat', compareNumeric, function(x) { return (x.position !== null ? x.position[1] : null); }); },
         value: function(plane) { return (plane.position != null ? plane.position[1].toFixed(4) : ""); },
         align: 'right' };
     cols.lon = {
-        text: 'Longitude',
+        text: '经度',
         sort: function () { sortBy('lon', compareNumeric, function(x) { return (x.position !== null ? x.position[0] : null); }); },
         value: function(plane) { return (plane.position != null ? plane.position[0].toFixed(4) : ""); },
         align: 'right' };
     cols.data_source = {
-        text: 'Source',
+        text: '信号源',
         sort: function () { sortBy('data_source', compareNumeric, function(x) { return x.getDataSourceNumber(); } ); },
         value: function(plane) { return format_data_source(plane.getDataSource()); },
         align: 'right' };
@@ -3659,16 +3648,16 @@ function refreshFeatures() {
         value: function(plane) { return (plane.military ? 'yes' : 'no'); },
         align: 'right' };
     cols.wd = {
-        text: 'Wind D.',
+        text: '风向',
         sort: function () { sortBy('wd', compareNumeric, function(x) { return x.wd; }); },
         value: function(plane) { return plane.wd != null ? (plane.wd + '°') : ''; },
         align: 'right' };
     cols.ws = {
-        text: 'Wind S.',
+        text: '风速',
         sort: function () { sortBy('ws', compareNumeric, function(x) { return x.ws; }); },
         value: function(plane) { return format_speed_brief(plane.ws, DisplayUnits); },
         align: 'right',
-        header: function () { return 'Wind' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')'; },
+        header: function () { return '风速' + NBSP + '(' + get_unit_label("speed", DisplayUnits) + ')'; },
     };
 
     const colsEntries = Object.entries(cols);
@@ -4620,7 +4609,7 @@ function invertMap(evt){
         }
         new Toggle({
             key: "altitudeChart",
-            display: "Altitude Chart",
+            display: "高度表",
             container: "#settingsRight",
             init: chartOn,
             setState: altitudeChart.render
@@ -4663,7 +4652,7 @@ function toggleTableInView(arg) {
         loStore['tableInView'] = tableInView;
     }
 
-    jQuery('#with_positions').text(tableInView ? "On Screen:" : "With Position:");
+    jQuery('#with_positions').text(tableInView ? "在屏幕上:" : "有地址的:");
 
     buttonActive('#V', tableInView);
 }
@@ -4960,10 +4949,10 @@ Filter.prototype.init = function() {
     const row = this.tbody.insertRow();
     row.innerHTML =
         `<td><form id="${this.id}">`
-        + '<div class="infoBlockTitleText">Filter by '+ this.name +':</div>'
+        + '<div class="infoBlockTitleText">按照'+ this.name +'搜索:</div>'
         + `<input id="${this.id}_input" name="${this.id}_name" type="text" class="searchInput" maxlength="1024">`
-        + '<button class="formButton" type="submit">Filter</button>'
-        + `<button class="formButton" id="${this.id}_reset">Reset</button>`
+        + '<button class="formButton" type="submit">搜索</button>'
+        + `<button class="formButton" id="${this.id}_reset">重置</button>`
         + '</form></td>'
     ;
     this.input = jQuery(this.sid + '_input');
@@ -4978,31 +4967,31 @@ function initFilters() {
     new Filter({
         key: 'callsign',
         field: 'name',
-        name: 'callsign',
+        name: '呼号',
         table: "filterTable",
     });
     new Filter({
         key: 'squawk',
         field: 'squawk',
-        name: 'squawk',
+        name: '应答机',
         table: "filterTable",
     });
     new Filter({
         key: 'type',
         field: 'icaoType',
-        name: 'type code',
+        name: '机型代码',
         table: "filterTable",
     });
     new Filter({
         key: 'description',
         field: 'typeDescription',
-        name: 'type description',
+        name: '机型描述',
         table: "filterTable",
     });
     new Filter({
         key: 'icao',
         field: 'icao',
-        name: 'ICAO hex id',
+        name: 'ICAO十六进制 ID',
         table: "filterTable",
     });
 
@@ -5010,19 +4999,19 @@ function initFilters() {
     new Filter({
         key: 'registration',
         field: 'registration',
-        name: 'registration',
+        name: '注册号',
         table: 'filterTable3'
     });
     new Filter({
         key: 'country',
         field: 'country',
-        name: 'country of registration',
+        name: '注册国家',
         table: 'filterTable3'
     });
     new Filter({
         key: 'category',
         field: 'category',
-        name: 'category (A3,B0,..)',
+        name: '飞机类别(A3,B0,..)',
         table: 'filterTable3'
     });
 
@@ -7876,7 +7865,7 @@ function testUnhide() {
     window.document.dispatchEvent(new Event('visibilitychange'));
 }
 
-function autoSelectClosest() {
+function selectClosest() {
     if (!loadFinished)
         return;
     let closest = null;
@@ -7888,11 +7877,7 @@ function autoSelectClosest() {
             closest = plane;
         if (plane.position == null || !plane.visible)
             continue;
-        let refLoc = [CenterLon, CenterLat];
-        if (autoselectCoords && autoselectCoords.length == 2) {
-            refLoc = [ autoselectCoords[1], autoselectCoords[0] ];
-        }
-        const dist = ol.sphere.getDistance(refLoc, plane.position);
+        const dist = ol.sphere.getDistance([CenterLon, CenterLat], plane.position);
         if (dist == null || isNaN(dist))
             continue;
         if (closestDistance == null || dist < closestDistance) {
@@ -7908,8 +7893,8 @@ function setAutoselect() {
     clearInterval(timers.autoselect);
     if (!autoselect)
         return;
-    timers.autoselect = window.setInterval(autoSelectClosest, 5000);
-    autoSelectClosest();
+    timers.autoselect = window.setInterval(selectClosest, 5000);
+    selectClosest();
 }
 function registrationLink(plane) {
     if (plane.country === 'Brazil') {
