@@ -7,8 +7,8 @@ trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
 renice 10 $$
 
 srcdir=/run/readsb
-repo="https://github.com/wiedehopf/tar1090"
-db_repo="https://github.com/wiedehopf/tar1090-db"
+repo="https://ghproxy.com/https://github.com/HLLF-FAN/tar1090"
+db_repo="https://ghproxy.com/https://github.com/HLLF-FAN/tar1090-db"
 
 # optional command line options for this install script
 # $1: data source directory
@@ -454,13 +454,13 @@ echo --------------
 
 if [[ $lighttpd == yes ]]; then
     for name in $names; do
-        echo "All done! Webinterface available at http://$(ip route get 1.2.3.4 | grep -m1 -o -P 'src \K[0-9,.]*')/$name"
+        echo "全部完成！Web界面位于 http://$(ip route get 1.2.3.4 | grep -m1 -o -P 'src \K[0-9,.]*')/$name"
     done
 elif [[ $nginx == yes ]]; then
     for name in $names; do
-        echo "All done! Webinterface once nginx is configured will be available at http://$(ip route get 1.2.3.4 | grep -m1 -o -P 'src \K[0-9,.]*')/$name"
+        echo "全部完成！配置nginx后，Web界面将在 http://$(ip route get 1.2.3.4 | grep -m1 -o -P 'src \K[0-9,.]*')/$name"
     done
 else
-    echo "All done! You'll need to configure your webserver yourself, see ${ipath}/nginx-tar1090.conf for a reference nginx configuration"
+    echo "全部完成！您需要自己配置Web服务器，有关nginx配置的参考信息，请参阅 ${ipath}/nginx-tar1090.conf"
 fi
 

@@ -5,9 +5,9 @@ echo --------------
 if [[ -n $1 ]]; then
 	instance="tar1090-$1"
     rm -rf "/usr/local/share/tar1090/html-$1"
-    echo "Removing tar1090, instance name $instance!"
+    echo "正在删除tar1090，实例名称 $instance!"
 else
-    echo "Removing tar1090, all instances!"
+    echo "正在删除tar1090，所有实例！"
 	rm -rf /usr/local/share/tar1090
     rm -f /etc/lighttpd/conf-available/*tar1090*
     rm -f /etc/lighttpd/conf-enabled/*tar1090*
@@ -34,4 +34,4 @@ systemctl restart lighttpd
 
 
 echo --------------
-echo "tar1090 is now gone! Shoo shoo!"
+echo "tar1090已卸载！"
