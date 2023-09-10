@@ -7,7 +7,7 @@ trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
 renice 10 $$
 
 srcdir=/run/readsb
-repo="https://ghproxy.com/https://github.com/HLLF-FAN/tar1090"
+repo="https://ghproxy.com/https://github.com/HLLF-FAN/tar1090-zh"
 db_repo="https://ghproxy.com/https://github.com/HLLF-FAN/tar1090-db"
 
 # optional command line options for this install script
