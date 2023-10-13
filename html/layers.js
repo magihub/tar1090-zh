@@ -156,7 +156,58 @@ function createBaseLayers() {
         }));
     }
     
-    
+    if (true) {
+        const getRainviewerLayers = async function (key) {
+            const response = await fetch("https://api.fan0225.top:60225/geo/map/weatherjson", {
+                credentials: "omit",
+            });
+            const jsonData = await response.json();
+            return jsonData[key];
+        }
+        const rainviewerRadar = new ol.layer.Tile({
+            name: 'weather_radar',
+            title: '实时气象雷达图',
+            type: 'overlay',
+            opacity: 0.35,
+            visible: false,
+            zIndex: 99,
+        });
+        const refreshRainviewerRadar = async function () {
+            const latestLayer = await getRainviewerLayers('radar');
+            const rainviewerRadarSource = new ol.source.XYZ({
+                url: 'https://api.fan0225.top:60225/geo/map/weather/' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/4/1_1.png',
+                attributions: '<a href="https://api.fan0225.top:60225/" target="_blank">api.fan0225.top</a>',
+                attributionsCollapsible: false,
+                maxZoom: 20,
+            });
+            rainviewerRadar.setSource(rainviewerRadarSource);
+        };
+        refreshRainviewerRadar();
+        window.setInterval(refreshRainviewerRadar, 2 * 60 * 1000);
+        mapmap.push(rainviewerRadar);
+        const rainviewerClouds = new ol.layer.Tile({
+            name: 'weather_clouds',
+            title: '实时气象云图',
+            type: 'overlay',
+            opacity: 0.35,
+            visible: false,
+            zIndex: 99,
+        });
+        const refreshRainviewerClouds = async function () {
+            const latestLayer = await getRainviewerLayers('satellite');
+            const rainviewerCloudsSource = new ol.source.XYZ({
+                url: 'https://api.fan0225.top:60225/geo/map/weather/' + latestLayer.infrared[latestLayer.infrared.length - 1].path + '/512/{z}/{x}/{y}/0/0_0.png',
+                attributions: '<a href="https://api.fan0225.top:60225/" target="_blank">api.fan0225.top</a>',
+                attributionsCollapsible: false,
+                maxZoom: 20,
+            });
+            rainviewerClouds.setSource(rainviewerCloudsSource);
+        };
+        refreshRainviewerClouds();
+        window.setInterval(refreshRainviewerClouds, 2 * 60 * 1000);
+        mapmap.push(rainviewerClouds);
+    }
+
     if (!adsbexchange) {
         mapmap.push(new ol.layer.Tile({
             source: new ol.source.XYZ({
@@ -226,9 +277,6 @@ function createBaseLayers() {
             //fold: 'open',
         }));
     }
-
-
-
 
     return layers_group;
 }
