@@ -175,7 +175,7 @@ function createBaseLayers() {
         const refreshRainviewerRadar = async function () {
             const latestLayer = await getRainviewerLayers('radar');
             const rainviewerRadarSource = new ol.source.XYZ({
-                url: 'https://api.fan0225.top:60225/geo/map/weather/' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/4/1_1.png',
+                url: 'https://api.fan0225.top:60225/geo/map/weather/v2/radar' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/4/1_1.png',
                 attributions: '<a href="https://api.fan0225.top:60225/" target="_blank">api.fan0225.top</a>',
                 attributionsCollapsible: false,
                 maxZoom: 20,
