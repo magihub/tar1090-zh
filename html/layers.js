@@ -158,14 +158,14 @@ function createBaseLayers() {
     
     if (true) {
         const getRainviewerLayers = async function (key) {
-            const response = await fetch("https://api.fan0225.top:60225/geo/map/weatherjson", {
+            const response = await fetch("https://api.rainviewer.com/public/weather-maps.json", {
                 credentials: "omit",
             });
             const jsonData = await response.json();
             return jsonData[key];
         }
         const rainviewerRadar = new ol.layer.Tile({
-            name: 'weather_radar',
+            name: 'rainviewer_radar',
             title: '实时气象雷达图',
             type: 'overlay',
             opacity: 0.35,
@@ -175,8 +175,8 @@ function createBaseLayers() {
         const refreshRainviewerRadar = async function () {
             const latestLayer = await getRainviewerLayers('radar');
             const rainviewerRadarSource = new ol.source.XYZ({
-                url: 'https://api.fan0225.top:60225/geo/map/weather/v2/radar' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/4/1_1.png',
-                attributions: '<a href="https://api.fan0225.top:60225/" target="_blank">api.fan0225.top</a>',
+                url: 'https://tilecache.rainviewer.com/v2/radar/' + latestLayer.past[latestLayer.past.length - 1].time + '/512/{z}/{x}/{y}/4/1_1.png',
+                attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
                 attributionsCollapsible: false,
                 maxZoom: 20,
             });
@@ -186,7 +186,7 @@ function createBaseLayers() {
         window.setInterval(refreshRainviewerRadar, 2 * 60 * 1000);
         mapmap.push(rainviewerRadar);
         const rainviewerClouds = new ol.layer.Tile({
-            name: 'weather_clouds',
+            name: 'rainviewer_clouds',
             title: '实时气象云图',
             type: 'overlay',
             opacity: 0.35,
@@ -196,8 +196,8 @@ function createBaseLayers() {
         const refreshRainviewerClouds = async function () {
             const latestLayer = await getRainviewerLayers('satellite');
             const rainviewerCloudsSource = new ol.source.XYZ({
-                url: 'https://api.fan0225.top:60225/geo/map/weather/' + latestLayer.infrared[latestLayer.infrared.length - 1].path + '/512/{z}/{x}/{y}/0/0_0.png',
-                attributions: '<a href="https://api.fan0225.top:60225/" target="_blank">api.fan0225.top</a>',
+                url: 'https://tilecache.rainviewer.com/' + latestLayer.infrared[latestLayer.infrared.length - 1].path + '/512/{z}/{x}/{y}/0/0_0.png',
+                attributions: '<a href="https://www.rainviewer.com/api.html" target="_blank">RainViewer.com</a>',
                 attributionsCollapsible: false,
                 maxZoom: 20,
             });
