@@ -103,7 +103,7 @@ Please check all the buttons and read all the tooltips before you do.
 Try deleting the browser cache for the tar1090 page.
 
 
-## Enable (/disable) FA links in the webinterface (previously enabled by default)
+## Enable (/disable) FA links in the webinterface (本版已恢复默认启用)
 
 ```
 # ENABLE:  启用链接
