@@ -21,10 +21,10 @@ This install script assumes Raspbian / Debian / Ubunutu and will not work on sys
 tar1090 is not a readsb / dump1090-fa replacement, it merely adds an additional webinterface for an existing readsb or dump1090-fa installation.
 dump1090-mutability installations should work as well, aircraft details will be limited though.
 
-## Installation
+## Installation 安装中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/HLLF-FAN/tar1090-zh/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 ```
 
 ## View the added webinterface
@@ -39,10 +39,10 @@ http://192.168.x.yy/tar1090/?pTracks
 
 Check further down for keyboard shortcuts.
 
-## Update (same command as installation)
+## Update (same command as installation) 更新中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/HLLF-FAN/tar1090-zh/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 ```
 
 Configuration should be preserved.
@@ -106,11 +106,11 @@ Try deleting the browser cache for the tar1090 page.
 ## Enable (/disable) FA links in the webinterface (previously enabled by default)
 
 ```
-# ENABLE:
+# ENABLE:  启用链接
 sudo sed -i -e 's?.*flightawareLinks.*?flightawareLinks = true;?' /usr/local/share/tar1090/html/config.js
 # ENABLE if the above doesn't work (updated from previous version)
 echo 'flightawareLinks = true;' | sudo tee -a /usr/local/share/tar1090/html/config.js
-# DISABLE:
+# DISABLE:  禁用链接
 sudo sed -i -e 's?.*flightawareLinks.*?flightawareLinks = false;?' /usr/local/share/tar1090/html/config.js
 ```
 
@@ -155,18 +155,18 @@ After that run the install script and it should work.
 978 should be disabled in the config file for this configuration.
 UAT traffic will be displayed as ADS-B, this can't be avoided.
 
-### Installation / Update to work with another folder, for example /run/combine1090
+### Installation / Update to work with another folder, for example /run/combine1090  与其他文件夹共用
 
 
 ```
-wget -nv -O /tmp/install.sh https://github.com/wiedehopf/tar1090/raw/master/install.sh
+wget -nv -O /tmp/install.sh https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh
 sudo bash /tmp/install.sh /run/combine1090
 ```
 
-## Remove / Uninstall
+## Remove / Uninstall   卸载中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://github.com/wiedehopf/tar1090/raw/master/uninstall.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/uninstall.sh)"
 ```
 
 ## Using the filters
@@ -381,7 +381,7 @@ The following command line options need to be added to for example the decoder o
 
 You should also download
 ```
-wget -O /usr/local/share/tar1090/aircraft.csv.gz https://github.com/wiedehopf/tar1090-db/raw/csv/aircraft.csv.gz
+wget -O /usr/local/share/tar1090/aircraft.csv.gz https://github.com/magihub/tar1090-db/raw/csv/aircraft.csv.gz
 ```
 
 and add this command line option (for exaple via /etc/default/readsb):
@@ -438,13 +438,13 @@ put in these two lines if you're using dump1090-fa
 /run/dump1090-fa persist
 ```
 
-if you then run the tar1090 install script afterwards you'll have an extra instance you can configure the history retention for.
+if you then run the tar1090 install script afterwards you'll have an extra instance you can configure the history retention for.   中文版
 ```
-sudo bash -c "$(wget -nv -O - https://github.com/wiedehopf/tar1090/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 sudo nano /etc/default/tar1090-persist
 ```
 
-change to these values for 24h of history:
+change to these values for 24h of history:  改为24h历史记录
 
 ```
 # Interval at which the track history is saved
@@ -513,7 +513,7 @@ alternative display style: &realHeat
 - blurryness: &heatBlur=2
 - weight of each dot for the heatmap: &heatWeight=4
 
-## offline map
+## offline map   离线地图
 
 <https://github.com/adsbxchange/wiki/wiki/tar1090-offline-map>
 
