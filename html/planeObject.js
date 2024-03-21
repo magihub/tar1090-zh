@@ -54,7 +54,7 @@ function PlaneObject(icao) {
 PlaneObject.prototype.setNull = function() {
     this.flight = null;
     this.flightTs = 0;
-    this.name = 'no callsign';
+    this.name = '';			// 将默认值 'no callsign' 改为 '' 空值，ModeS 的飞机 即可在开启FA链接时不显示为空（默认显示HEX ID）
     this.squawk    = null;
     this.category  = null;
     this.dataSource = "modeS";
@@ -847,9 +847,13 @@ PlaneObject.prototype.updateIcon = function() {
             callsign =  'reg: ' + this.registration;
         else
             callsign =   'hex: ' + this.icao;
-        if (useRouteAPI && this.routeString)
-            callsign += ' - ' + this.routeString;
-
+		
+           if (useRouteAPI && this.routeString)
+            callsign += '\n' + this.routeString;
+		
+        //    '\n' 为换行显示 this.routeString 航线
+		//		callsign += ' - ' + this.routeString;
+			
         const unknown = NBSP+NBSP+"?"+NBSP+NBSP;
 
         let alt;
@@ -2868,21 +2872,21 @@ PlaneObject.prototype.setFlight = function(flight) {
     if (flight == null) {
         if (now - this.flightTs > 10 * 60) {
             this.flight = null;
-            this.name ='no callsign';
+            this.name ='';		// 将默认值 'no callsign' 改为 '' 空值
         }
     } else if (flight == "@@@@@@@@") {
         this.flight = null;
-        this.name ='no callsign';
+        this.name ='';		// 将默认值 'no callsign' 改为 '' 空值
     } else {
         this.flight = `${flight}`;
-        this.name = this.flight.trim() || 'empty callsign';
+        this.name = this.flight.trim() || '';		// 将默认值 'empty callsign' 改为 '' 空值
         this.flightTs = now;
 
         let currentName = this.name;
         if (useRouteAPI) {
             if (g.route_cache[currentName] === undefined &&
                 this.name &&
-                this.name != 'empty callsign' &&
+                this.name != '' &&		// 将默认值 'empty callsign' 改为 '' 空值
                 this.seen < 60 &&
                 this.registration != this.name &&
                 this.position) {
@@ -2938,10 +2942,13 @@ PlaneObject.prototype.setFlight = function(flight) {
                                 console.log(logText);
                             }
                             if (route.airport_codes != 'unknown') {
-                                if (route.plausible == true) {
+                                if (route.plausible == true) {											//plausible 看似合理的
                                     g.route_cache[route.callsign] = route._airport_codes_iata;
                                 } else {
-                                    g.route_cache[route.callsign] = `?? ${route._airport_codes_iata}`;
+                                    g.route_cache[route.callsign] = `${route._airport_codes_iata}`;       //将“看似不合理的”航线的 前双问号 暂时删除
+																
+                             //        g.route_cache[route.callsign] = `${route._airport_codes_iata}?`;   	//将 前双问号 （移至后面 且改为单问号） 
+							 //        g.route_cache[route.callsign] = `?? ${route._airport_codes_iata}`;									
                                 }
                             }
                         }

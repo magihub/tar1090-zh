@@ -1,5 +1,5 @@
-// Some global variables are defined in early.js
-// early.js takes care of getting some history files while the html page and
+// Some global variables are defined in early_381b865a4574f8d08745ad1b5680fe12.js
+// early_381b865a4574f8d08745ad1b5680fe12.js takes care of getting some history files while the html page and
 // some javascript libraries are still loading, hopefully speeding up loading
 
 
@@ -1242,7 +1242,8 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesLive",
-        display: "实时航迹标签：UTC协调世界时",
+        display: "实时航迹标签：UTC时间",
+ //       display: "实时航迹标签：UTC协调世界时",		
         container: "#settingsLeft",
         init: utcTimesLive,
         setState: function(state) {
@@ -1254,7 +1255,8 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesHistoric",
-        display: "历史航迹标签：UTC协调世界时",
+ //       display: "历史航迹标签：UTC协调世界时",
+        display: "历史航迹标签：UTC时间",		
         container: "#settingsLeft",
         init: utcTimesHistoric,
         setState: function(state) {
@@ -2024,7 +2026,7 @@ function webglAddLayer() {
         let glStyle = {
             symbol: {
                 symbolType: 'image',
-                src: 'images/sprites.png',
+                src: 'images/sprites_f0c84e57a9cf2e424887b81bcd5b8a7f.png',
                 size: [ 'get', 'size' ],
                 offset: [0, 0],
                 textureCoord: [ 'array',
@@ -3056,7 +3058,7 @@ function refreshSelected() {
             if (flightawareLinks) {
                 jQuery('#selected_registration').html(getFlightAwareIdentLink(selected.registration, selected.registration));
             } else if (registrationLinks && registrationLink(selected)) {
-                jQuery('#selected_registration').html(`<a class="link" target="_blank" href="${registrationLink(selected)}">${selected.registration}</a>`);
+               jQuery('#selected_registration').html(`<a class="link" target="_blank" href="${registrationLink(selected)}">${selected.registration}</a>`);										
             } else {
                 jQuery('#selected_registration').updateText(selected.registration);
             }
@@ -3070,9 +3072,11 @@ function refreshSelected() {
     if (selected.pia)
         dbFlags += '<a class="link" target="_blank" href="https://www.faa.gov/air_traffic/technology/equipadsb/privacy/" rel="noreferrer">PIA</a> / ';
     if (selected.military)
-        dbFlags += 'military / ';
+        dbFlags += '军用飞机 / ';							// 数据库标识 military
+    //    dbFlags += 'military / ';	
     if (dbFlags.length == 0) {
-        jQuery('#selected_dbFlags').updateText("none");
+        jQuery('#selected_dbFlags').updateText("无");			   // 数据库标识 none
+   //     jQuery('#selected_dbFlags').updateText("none");		
     } else {
         jQuery('#selected_dbFlags').html(dbFlags.slice(0, -3));
     }
@@ -3451,7 +3455,10 @@ function refreshHighlighted() {
 
     jQuery("#highlighted_altitude").text(format_altitude_long(highlighted.altitude, highlighted.vert_rate, DisplayUnits));
 
-    jQuery('#highlighted_pf_route').text((highlighted.pfRoute ? highlighted.pfRoute : highlighted.icao.toUpperCase()));
+	
+    jQuery('#highlighted_route').text(highlighted.routeString);			// 增加悬停高亮显示航线参数 highlighted_route（index。html里需同步添加）
+
+    jQuery('#highlighted_pf_route').text(highlighted.pfRoute ? highlighted.pfRoute : 'Hex ID: ' + highlighted.icao.toUpperCase());		// 添加'Hex ID: '前缀
 
     jQuery('#highlighted_rssi').text(highlighted.rssi != null ? highlighted.rssi.toFixed(1) + ' dBFS' : "n/a");
 }
@@ -3537,8 +3544,9 @@ function refreshFeatures() {
     cols.icao = {
         text: '十六进制ID',
         sort: function () { sortBy('icao', compareAlpha, function(x) { return x.icao; }); },
-        value: function(plane) { return plane.icao; },
-        td: '<td class="icaoCodeColumn">',
+        value: function(plane) { return plane.icao.toUpperCase(); },   // .toUpperCase()强制大写显示
+     //  value: function(plane) { return plane.icao; },				// 原不注释时，为大写
+     //   td: '<td class="icaoCodeColumn">',						//  但是字体变成宋体
     };
     cols.flag = {
         text: '旗帜',
@@ -3563,7 +3571,7 @@ function refreshFeatures() {
             value: function(plane) {
                 return ((useRouteAPI && plane.routeString) || '');
             },
-            text: '路线' };
+            text: '航线' };
     }
     cols.registration = {
         sort: function () { sortBy('registration', compareAlpha, function(x) { return x.registration; }); },
@@ -3643,9 +3651,9 @@ function refreshFeatures() {
         value: function(plane) { return format_data_source(plane.getDataSource()); },
         align: 'right' };
     cols.military = {
-        text: 'Mil.',
+        text: '军机',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“是”
         sort: function () { sortBy('military', compareAlpha, function(x) { return (x.military ? 'yes' : 'no'); } ); },
-        value: function(plane) { return (plane.military ? 'yes' : 'no'); },
+        value: function(plane) { return (plane.military ? '是' : ''); },
         align: 'right' };
     cols.wd = {
         text: '风向',
@@ -5048,7 +5056,8 @@ function initFilters() {
 function getFlightAwareModeSLink(code, ident, linkText) {
     if (code !== null && code.length > 0 && code[0] !== '~' && code !== "000000") {
         if (!linkText) {
-            linkText = "FlightAware: " + code.toUpperCase();
+            linkText =  "" + code.toUpperCase();				//修改 modes 时链接文本前的"FlightAware: "前缀为“0x:”，仅显示ICAO HEX ID
+        //    linkText = "FlightAware: " + code.toUpperCase();			
         }
 
         let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/modes/" + code ;
@@ -8308,7 +8317,8 @@ function setSelectedIcao() {
         return;
     }
     selIcao = selected.icao;
-    let hex_html = "<span style='font-family: monospace;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";
+    let hex_html = "<span class=identSmall>Hex ID:" + NBSP + selected.icao.toUpperCase() + "</span>";
+ //   let hex_html = "<span style='font-family: monospace;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";	
     if (globeIndex || shareBaseUrl) {
         if (copiedIcao && (copiedIcao != selected.icao || new Date().getTime() - copyLinkTime > 2000)) {
             copiedIcao = null;

@@ -231,7 +231,7 @@ BingMapsAPIKey = null;
 // imageConfigLink = "";
 // imageConfigText = "";
 
-//flightawareLinks = false;
+flightawareLinks = true;
 //shareBaseUrl = 'https://globe.adsbexchange.com/';
 // planespottersLinks = false;
 
@@ -372,3 +372,4 @@ tableColors = {
 //prefer978 = 0;
 //
 // dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
+offlineMapDetail=9;

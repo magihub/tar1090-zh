@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="libs/jquery-ui-1.13.2.min.css" type="text/css">
   <link rel="stylesheet" href="libs/ol-6.14.1.css" type="text/css" />
   <link rel="stylesheet" href="libs/ol-layerswitcher-3.8.3.css" type="text/css" />
-  <link rel="stylesheet" href="style.css" type="text/css" />
+  <link rel="stylesheet" href="style_6f8909751c5e197a84b1258e342dc197.css" type="text/css" />
 
   <link rel="icon" type="image/png" href="images/tar1090-favicon.png">
 
@@ -34,9 +34,12 @@
         <div>
           <span class="identLarge"><span id="highlighted_callsign">n/a</span></span>
         </div>
+<!-- 	-->		
         <div>
           <span class="identSmall"><span id="highlighted_pf_route"></span></span>
-        </div>
+       </div>
+   
+	
       </div>
       <div class="infoBlockSection">
         <div>
@@ -47,6 +50,12 @@
           <div class="infoHeading"><span>机型: </span></div>
           <div class="infoData"><span id="highlighted_icaotype">n/a</span></div>
         </div>
+		<!-- 增加悬停显示航线	-->	
+        <div>
+          <div class="infoHeading"><span>航线: </span></div>		
+          <div class="infoData"><span id="highlighted_route"></span></div>
+        </div>			
+		
         <div>
           <div class="infoHeading"><span>高度: </span></div>
           <div class="infoData"><span id="highlighted_altitude">n/a</span></div>
@@ -73,10 +82,19 @@
 
         <div class="highlightedTitle infoBlockSection">
           <div>
+ 		  
             <span class="identLarge" title="呼号：通常是空中交通管制呼号或飞机的登记，由飞行员输入应答器" id="selected_callsign">n/a</span>
+<!--				
+            <span class="identLarge" title="呼号：通常是空中交通管制呼号或飞机的登记，由飞行员输入应答器" id="selected_callsign"><a class="link" target="_blank" href="https://zh.flightaware.com/live/flight/$selected_callsign">n/a</a></span>
+-->				
           </div>
+	  
+          <div class="identLarge" id="selected_icao" title="ICAO Hex ID：飞机的唯一 ICAO 识别号，以十六进制格式显示在飞机应答器中（可能是错误的，我们仍然会显示错误的十六进制数据）">
+          </div>
+<!-- 
           <div id="selected_icao" title="ICAO hex ID：飞机的唯一 ICAO 识别号，以十六进制格式显示在飞机应答器中（可能是错误的，我们仍然会显示错误的十六进制数据）">
-          </div>
+          </div>		  	  
+-->			  
           <div style="display: none" id="creditsSelected">
             <table class="infoSectionTable">
               <tr>
@@ -100,7 +118,7 @@
           <div class="infoHeading">
             <span><a class="link" target="_blank"
                 href="https://discussions.flightaware.com/t/flightaware-mlat-network-announcement/18874"
-                rel="noreferrer">Anonymized MLAT result</a></span>
+                rel="noreferrer">匿名 MLAT 结果</a></span>
           </div>
           <div class="rSpacer"></div>
           <div class="rSpacer"></div>
@@ -112,7 +130,7 @@
             <div class="infoHeading">
               <span>No <a class="link" target="_blank"
                   href="https://en.wikipedia.org/wiki/Aviation_transponder_interrogation_modes#ICAO_24-bit_address"
-                  rel="noreferrer">ICAO 24 bit address</a></span>
+                  rel="noreferrer">ICAO 24 位地址</a></span>
             </div>
           </div>
         </div>
@@ -165,7 +183,11 @@
                 <div class="infoHeading">
                   <span title="飞机注册号:飞机注册所在国家/地区分配的字母数字注册代码。">飞机注册号: </span>
                 </div>
+				
                 <div class="infoData"><span id="selected_registration">n/a</span></div>
+<!--	  
+                <div class="infoData"><span id="selected_registration"><?php echo $selected_registration; ?></span></div>		
+-->	
               </td>
             </tr>
             <tr>
@@ -236,9 +258,9 @@
             </tr>
           </table>
         </div>
-        <button id="show_trace" type="button" class="greyButton">History</button>
+        <button id="show_trace" type="button" class="greyButton">历史</button>
         <div id="history_collapse" class="infoBlockSection" style="display: none">
-          <div class="identSmall" id="trace_date">UTC day:
+          <div class="identSmall" id="trace_date">UTC 日期:
           </div>
           <div class="rSpacer">
           </div>
@@ -248,8 +270,8 @@
           <div class="rSpacer">
           </div>
           <div>
-            <button class="formButton" id="trace_back_1d">previous</button>
-            <button class="formButton" id="trace_jump_1d">next</button>
+            <button class="formButton" id="trace_back_1d">上一个</button>
+            <button class="formButton" id="trace_jump_1d">下一个</button>
           </div>
           <div class="rSpacer">
           </div>
@@ -258,8 +280,8 @@
           <div class="rSpacer">
           </div>
           <div>
-            <button class="formButton" id="leg_prev">previous</button>
-            <button class="formButton" id="leg_next">next</button>
+            <button class="formButton" id="leg_prev">上一个</button>
+            <button class="formButton" id="leg_next">下一个</button>
           </div>
           <div class="rSpacer">
           </div>
@@ -268,7 +290,7 @@
           <div class="rSpacer">
           </div>
           <div>
-            <button class="formButton" id="tStop">stop</button>
+            <button class="formButton" id="tStop">停止</button>
             <button class="formButton" id="t1x">1x</button>
             <button class="formButton" id="t5x">5x</button>
           </div>
@@ -282,7 +304,7 @@
           <div class="rSpacer">
           </div>
           <div>
-            Click on the trace line to start playback!
+            点击轨迹线开始回放！
           </div>
         </div>
         <div class="sectionTitle">
@@ -707,8 +729,10 @@
 
 
         </div>
-
+		<!--
         <div class="bottom-info-container">
+      	-->	
+        <div class="bottom-info-container" style="text-align: left">		
           <div class="bottom-info-text"> 通过将鼠标悬停在每个数据标签上，了解有关模式S数据类型的更多信息。</div>
         </div>
         <div>
@@ -755,7 +779,10 @@
         </div>
         <div id="settingsLeft" class="settingsColumn">
           <div class="settingsOptionContainer">
+		<!--  	  
             <label for="units_selector"><span class="infoBlockTitleText">Units:&nbsp;&nbsp;</span></label>
+		-->		
+            <label for="units_selector"><span class="infoBlockTitleText">单位:&nbsp;&nbsp;</span></label>
             <select name="units_selector" id="units_selector">
               <option value="nautical">航空</option>
               <option value="metric">公制</option>
@@ -814,7 +841,10 @@
             onclick="toggles['MapDim'].toggle();"><span class="buttonText">B</span></div>
           <div class="buttonSpacer">
           </div>
+		 <!--   
           <div style="display: none" id="V" title="Table: only show aircraft in current (V)iew"
+	    -->	  
+          <div style="display: none" id="V" title="仅在当前视图中显示"		
             class="button inActiveButton" onclick="toggleTableInView();"><span class="buttonText">V</span></div>
           <div id="M" title="开启/关闭多选" class="button inActiveButton" onclick="toggleMultiSelect();"><span
               class="buttonText">M</span></div>
@@ -837,6 +867,7 @@
         <button id="altitude_chart_button"></button>
       </div>
       <div id="replayBar">
+	<!--	  
         <button id="replayPlay">Play</button>
         <p id="replayDateHint">Date:</p>
         <input type="text" class="datepicker" id="replayDatepicker">
@@ -848,6 +879,18 @@
         <p id="replaySpeedSelect"></p>
         <p id="replayLoading"></p>
         <p></p>
+	-->	  
+        <button id="replayPlay">播放</button>
+        <p id="replayDateHint">日期:</p>
+        <input type="text" class="datepicker" id="replayDatepicker">
+        <p id="replayTimeHint">时间:</p>
+        <p id="hourSelect"></p>
+        <p id="minuteSelect"></p>
+        <p id="replayTimeZone">UTC</p>
+        <p id="replaySpeedHint">速度:</p>
+        <p id="replaySpeedSelect"></p>
+        <p id="replayLoading"></p>
+        <p></p>	
       </div> <!-- replayBar -->
 
     </div> <!-- map_container-->
@@ -901,10 +944,26 @@
 
             <!-- 在使用开源代码的过程中，我们应该尊重开源协议，不得随意复制、修改、传播开源代码。同时，我们也应该尊重原创作者的劳动成果，并在使用开源代码时注明出处。 -->
 
+
+	<!--
             <h1>ADS-B</h1>
 
             <h3 id="beijing-time"></h3>
             <h3 id="utc-time"></h3>
+	-->			
+
+            <tr><td style="text-align: center"><h2>南通ADS-B站点</h2></td></tr>
+			
+	<!--	
+            <td style="text-align: center">
+				<div><h4 id="beijing-time"></h4></div>
+				<div><h4 id="utc-time"></h4></div>
+			</td>
+	
+
+			
+			
+			
             <script>
               function formatTime(date) {
                 var year = date.getFullYear();
@@ -934,16 +993,22 @@
               // 每秒更新一次时间
               setInterval(updateTime, 1000);
             </script>
+			
+	-->	
 
             <tr class="infoblock_heading">
               <td style="text-align: right" class=link>
-                <a hidden>你的UUID是：</a>
+                <a hidden>设备UUID：9edbd83add21878e</a>
               </td>
             </tr>
 
             <tr class="infoblock_heading">
+              <td style="text-align: left" class=link>
+                <a href="/pi-dashboard/" target="_blank">设备状态监控</a>
+              </td>			
               <td style="text-align: right" class=link>
-                <a href="https://www.fan0225.top:60225/" target="_blank">by FAN</a>
+         <!--	修改原链接 https://www.fan0225.top:60225/ 为其ADS-B站	-->
+				<a href="https://adsb.fan0225.top:60225/tar1090/" target="_blank">FAN's</a>	
               </td>
             </tr>
             <tr class="rSpacer">
@@ -965,6 +1030,7 @@
                         id="dump1090_total_history">n/a</span> 个位置</td>
                   </tr>
                 </table>
+        <!--				
                 <table style="width: 100%">
                   <tr class="infoblock_heading">
                     <td style="width: 50%"><span class="infoBlockTitleText">CPU:</span> <span id="暂未开放">n/a</span>
@@ -972,6 +1038,7 @@
                         id="device-temperature">n/a</span>
                   </tr>
                 </table>
+		-->		
             </tr>
           </table>
           </td>
@@ -982,9 +1049,9 @@
 
           <div id="tabs" style="min-height: 10px; overflow: auto">
             <ul>
-              <li><a href="#tab-search">搜索</a></li>
-              <li><a href="#tab-filters">搜索</a></li>
-              <li><a href="#tab-columns">列表</a></li>
+              <li><a href="#tab-search">简单搜索</a></li>
+              <li><a href="#tab-filters">高级搜索</a></li>
+              <li><a href="#tab-columns">飞机列表</a></li>
             </ul>
             <div id="tab-search">
               <table id="tab-search-table" cellpadding="0" cellspacing="0">
@@ -1123,7 +1190,7 @@
   <div id="js_error" class="hidden"></div>
   <div id="container_splitter"></div>
 
-  <script>let databaseFolder = "db2";</script>
+  <script>let databaseFolder = "db-c1866b3";</script>
   <!-- JS_ANCHOR1 -->
   <script src="libs/jquery-3.6.1.min.js"></script>
   <script src="libs/elm-pep-01.js"></script>
@@ -1133,23 +1200,23 @@
   <script src="libs/ol-custom022.js"></script>
 
   <!-- JS_ANCHOR2 -->
-  <script src="early.js"></script>
+  <script src="early_381b865a4574f8d08745ad1b5680fe12.js"></script>
 
-  <script src="defaults.js"></script>
+  <script src="defaults_e4850ef70c46d3d6547bc5332ea14b23.js"></script>
   <script src="config.js"></script>
-  <script src="dbloader.js"></script>
-  <script src="registrations.js"></script>
-  <script src="formatter.js"></script>
-  <script src="flags.js"></script>
-  <script src="layers.js"></script>
+  <script src="dbloader_ab2f2b5a4c7676187e06f19e03a89d0e.js"></script>
+  <script src="registrations_11eeb2a2bc6f857c00cc650f716f0dce.js"></script>
+  <script src="formatter_d8628333543e9053ac555a8d100344ce.js"></script>
+  <script src="flags_85c027dc65e88e1a6a1df10612b195ee.js"></script>
+  <script src="layers_fe82c25581d19a191deb260ba7ad10df.js"></script>
   <script src="geomag2020.js"></script>
-  <script src="markers.js"></script>
+  <script src="markers_c6c1168a65ffadacfc63ac82c717dad7.js"></script>
 
   <!-- JS_ANCHOR3 -->
-  <script src="planeObject.js"></script>
-  <script src="script.js"></script>
+  <script src="planeObject_eba60c494c25a08422cafe2cd25293a9.js"></script>
+  <script src="script_885bc194e1b9116acae915febb91dc95.js"></script>
 
-  <link rel="preload" as="image" crossOrigin="anonymous" href="images/sprites.png">
+  <link rel="preload" as="image" crossOrigin="anonymous" href="images/sprites_f0c84e57a9cf2e424887b81bcd5b8a7f.png">
 
 </body>
 
