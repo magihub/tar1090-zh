@@ -1,5 +1,5 @@
-// Some global variables are defined in early_381b865a4574f8d08745ad1b5680fe12.js
-// early_381b865a4574f8d08745ad1b5680fe12.js takes care of getting some history files while the html page and
+// Some global variables are defined in early.js
+// early.js takes care of getting some history files while the html page and
 // some javascript libraries are still loading, hopefully speeding up loading
 
 
@@ -2026,7 +2026,7 @@ function webglAddLayer() {
         let glStyle = {
             symbol: {
                 symbolType: 'image',
-                src: 'images/sprites_f0c84e57a9cf2e424887b81bcd5b8a7f.png',
+                src: 'images/sprites.png',
                 size: [ 'get', 'size' ],
                 offset: [0, 0],
                 textureCoord: [ 'array',
@@ -3072,7 +3072,7 @@ function refreshSelected() {
     if (selected.pia)
         dbFlags += '<a class="link" target="_blank" href="https://www.faa.gov/air_traffic/technology/equipadsb/privacy/" rel="noreferrer">PIA</a> / ';
     if (selected.military)
-        dbFlags += '军用飞机 / ';							// 数据库标识 military
+        dbFlags += '军机 / ';							// 数据库标识 military
     //    dbFlags += 'military / ';	
     if (dbFlags.length == 0) {
         jQuery('#selected_dbFlags').updateText("无");			   // 数据库标识 none
@@ -3651,9 +3651,9 @@ function refreshFeatures() {
         value: function(plane) { return format_data_source(plane.getDataSource()); },
         align: 'right' };
     cols.military = {
-        text: '军机',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“是”
+        text: '军',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“是”
         sort: function () { sortBy('military', compareAlpha, function(x) { return (x.military ? 'yes' : 'no'); } ); },
-        value: function(plane) { return (plane.military ? '是' : ''); },
+        value: function(plane) { return (plane.military ? 'Y' : ''); },
         align: 'right' };
     cols.wd = {
         text: '风向',
