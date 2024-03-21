@@ -3651,10 +3651,10 @@ function refreshFeatures() {
         value: function(plane) { return format_data_source(plane.getDataSource()); },
         align: 'right' };
     cols.military = {
-        text: '军',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“是”
+        text: '军',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“Y”（是）
         sort: function () { sortBy('military', compareAlpha, function(x) { return (x.military ? 'yes' : 'no'); } ); },
         value: function(plane) { return (plane.military ? 'Y' : ''); },
-        align: 'right' };
+        align: 'center' };		//  默认右侧 改为居中
     cols.wd = {
         text: '风向',
         sort: function () { sortBy('wd', compareNumeric, function(x) { return x.wd; }); },
