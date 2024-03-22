@@ -1,4 +1,4 @@
-# tar1090
+# tar1090-zh
 
 
 ![Screenshot1](https://raw.githubusercontent.com/wiedehopf/tar1090/screenshots/screenshot3.png)
