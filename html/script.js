@@ -5057,11 +5057,10 @@ function getFlightAwareIdentLink(ident, linkText) {					//  此ident为注册号
 
 
 
-function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新建 getFlightAwareLink 获取HEX ID、呼号、注册号、链接显示文本
-    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000") {
+function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新建 FA 网站 getFlightAwareLink 获取HEX ID、呼号、注册号、链接显示文本
+    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000" && icao !== "00000000") {
         if (!linkText) {																
-            linkText =  ":" + icao.toUpperCase();				//修改 linkText 为空时，显示文本改为：仅显示ICAO HEX ID
-        //    linkText = "FlightAware: " + icao.toUpperCase();			
+            linkText =  "h:" + icao.toUpperCase() + "";				//修改 linkText 为空时，显示文本改为：显示带前后缀的ICAO HEX ID		
         }
 
           let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"";			
@@ -5076,7 +5075,9 @@ function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新
         } else if (registration != null && registration !== "") {
 			linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + registration.trim();
 			 
-			if (linkText ==  ":" + icao.toUpperCase()) {linkText =  "" + icao.toUpperCase();}		
+			if (linkText ==  "h:" + icao.toUpperCase() + "") { 
+			linkText =  "r:" + registration.toUpperCase() + ""; 	// 改为显示带前后缀的注册号
+			}		
         }
 		
         linkHtml += "\" rel=\"noreferrer\">" + linkText + "</a>";
@@ -5089,9 +5090,9 @@ function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新
 
 
 function getVariFlightLink(icao, callsign, registration, linkText) {				//  新建 飞常准网站 getVariFlightLink 获取HEX ID、呼号、注册号、链接显示文本
-    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000") {
+    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000" && icao !== "00000000") {
         if (!linkText) {																
-            linkText =  ":" + icao.toUpperCase();				//修改 linkText 为空时，显示文本改为：仅显示ICAO HEX ID		
+            linkText =  "h:" + icao.toUpperCase() + "";				//修改 linkText 为空时，显示文本改为：显示带前后缀的ICAO HEX ID		
         }
 
           let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"";			
@@ -5104,10 +5105,12 @@ function getVariFlightLink(icao, callsign, registration, linkText) {				//  新�
 		 
         } 
 /*	*/	
-		else if (registration != null && registration !== "") {			//	飞常准也不支持按注册号查询，仍保留FA查询注册号
+		else if (registration != null && registration !== "") {			//	飞常准不支持按注册号查询，仍保留FA查询注册号
 			linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + registration.trim();
 			 
-			if (linkText ==  ":" + icao.toUpperCase()) {linkText =  "" + icao.toUpperCase();}		
+			if (linkText ==  "h:" + icao.toUpperCase() + "") { 
+			linkText =  "r:" + registration.toUpperCase() + ""; 	// 改为显示带前后缀的注册号
+			}		
         }
 		
         linkHtml += "\" rel=\"noreferrer\">" + linkText + "</a>";
@@ -5116,8 +5119,6 @@ function getVariFlightLink(icao, callsign, registration, linkText) {				//  新�
 
     return "";
 }
-
-
 
 
 function getFlightAwareModeSLink(code, ident, linkText) {				//  此ident为呼号
