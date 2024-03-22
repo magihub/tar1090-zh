@@ -3034,7 +3034,8 @@ function refreshSelected() {
     }
 
     if (flightawareLinks) {
-        jQuery('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));
+        jQuery('#selected_flightaware_link').html(getFlightAwareLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建函数
+     //   jQuery('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));	
     }
 
     if (selected.isNonIcao() && selected.source != 'mlat') {
@@ -3560,7 +3561,8 @@ function refreshFeatures() {
         sort: function () { sortBy('flight', compareAlpha, function(x) { return x.flight }); },
         value: function(plane) {
             if (flightawareLinks)
-                return getFlightAwareModeSLink(plane.icao, plane.flight, plane.name);
+                return getFlightAwareLink(plane.icao, plane.flight, plane.registration, plane.name);		//替换新建函数
+			    //    return getFlightAwareModeSLink(plane.icao, plane.flight, plane.name);			原作者采用modes链接		    
             return (plane.flight || '');
         },
         html: flightawareLinks,
@@ -4851,17 +4853,6 @@ function updateAltFilter() {
     }
 }
 
-function getFlightAwareIdentLink(ident, linkText) {
-    if (ident !== null && ident !== "") {
-        if (!linkText) {
-            linkText = ident;
-        }
-        return '<a class="link" target="_blank" href="https://flightaware.com/live/flight/' + ident.trim() + '" rel="noreferrer">' + linkText + '</a>';
-    }
-
-    return "";
-}
-
 function onResetSourceFilter(e) {
     jQuery('#sourceFilter .ui-selected').removeClass('ui-selected');
 
@@ -5051,9 +5042,51 @@ function initFilters() {
 
 
 
+function getFlightAwareIdentLink(ident, linkText) {					//  此ident为注册号
+    if (ident !== null && ident !== "") {
+        if (!linkText) {
+            linkText = ident;
+        }
+        return '<a class="link" target="_blank" href="https://flightaware.com/live/flight/' + ident.trim() + '" rel="noreferrer">' + linkText + '</a>';
+    }
+
+    return "";
+}
 
 
-function getFlightAwareModeSLink(code, ident, linkText) {
+
+function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新建 getFlightAwareLink 获取HEX ID、呼号、注册号、链接显示文本
+    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000") {
+        if (!linkText) {																
+            linkText =  ":" + icao.toUpperCase();				//修改 linkText 为空时，显示文本改为：仅显示ICAO HEX ID
+        //    linkText = "FlightAware: " + icao.toUpperCase();			
+        }
+
+          let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"";			
+		  // 因FA无法查询仅有ICAO号的航班，故暂修改初始链接为空值，
+		  //实测为新开窗口跳转到本地IP/tar1090/，若linkText = icao.toUpperCase()，则跳转本地IP/tar1090/?icao=hexid（icao号），即单独查询该飞机
+		  
+       //   let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/modes/" + icao + "/redirect";
+		
+        if (callsign != null && callsign !== "") {
+         linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + callsign.trim();
+		 
+        } else if (registration != null && registration !== "") {
+			linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + registration.trim();
+			 
+			if (linkText ==  ":" + icao.toUpperCase()) {linkText =  "" + icao.toUpperCase();}		
+        }
+		
+        linkHtml += "\" rel=\"noreferrer\">" + linkText + "</a>";
+        return linkHtml;
+    }
+
+    return "";
+}
+
+
+
+function getFlightAwareModeSLink(code, ident, linkText) {				//  此ident为呼号
     if (code !== null && code.length > 0 && code[0] !== '~' && code !== "000000") {
         if (!linkText) {
             linkText =  "" + code.toUpperCase();				//修改 modes 时链接文本前的"FlightAware: "前缀为“0x:”，仅显示ICAO HEX ID
@@ -5070,6 +5103,8 @@ function getFlightAwareModeSLink(code, ident, linkText) {
 
     return "";
 }
+
+
 
 function getPhotoLink(ac) {
     if (jetphotoLinks) {
