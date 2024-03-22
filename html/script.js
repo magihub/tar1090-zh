@@ -3035,7 +3035,7 @@ function refreshSelected() {
 
     if (flightawareLinks) {
         jQuery('#selected_flightaware_link').html(getFlightAwareLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建FA函数		
-     //   jQuery('#selected_flightaware_link').html(getVariFlightLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建飞常准函数
+        jQuery('#selected_variflight_link').html(getVariFlightLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建飞常准函数
      //   jQuery('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));		
     }
 
