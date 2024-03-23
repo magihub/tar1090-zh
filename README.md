@@ -1,9 +1,10 @@
-## tar1090-zh 中文版
+# tar1090-zh 中文版
 
 
 ![Screenshot1](https://raw.githubusercontent.com/wiedehopf/tar1090/screenshots/screenshot3.png)
 
 Provides an improved webinterface for use with ADS-B decoders readsb / dump1090-fa
+
 提供改进的 Web 界面，可与 ADS-B 解码器 readsb / dump1090-fa 配合使用
 
 ## Installation 安装中文版
@@ -15,11 +16,13 @@ sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/ta
 ## View the added webinterface  查看 Web 界面
 
 Click the following URL and replace the IP address with address of your Raspberry Pi:
+
 单击以下 URL，将 IP 地址替换为 Raspberry Pi 的地址：
 
 http://192.168.x.yy/tar1090
 
 If you are curious about your coverage, try this URL:
+
 如果你对你的覆盖范围感到好奇， 试试这个 
 
 http://192.168.x.yy/tar1090/?pTracks
@@ -35,10 +38,10 @@ sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/ta
 Configuration should be preserved.
 
 
-## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)
-配置 1：历史记录间隔和快照数/ptracks 持续时间（可选）
+## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)  配置 1：历史记录间隔和快照数/ptracks 持续时间（可选）
 
 Edit the configuration file to change the interval in seconds and number of history files saved:
+
 编辑配置文件以更改时间间隔（以秒为单位）和保存的历史记录文件数：
 
 ```
@@ -53,10 +56,10 @@ sudo systemctl restart tar1090
 
 The duration of the history in seconds can be calculated as interval times history_size.
 
-## Configuring part 2: the web interface (optional):
-配置 2 ：Web 界面（可选）：
+## Configuring part 2: the web interface (optional):  配置 2 ：Web 界面（可选）：
 
 Remove the // at the start of a line, otherwise the setting will not be used.
+
 删除行首的 // ，否则不会使用该设置。
 
 ```
@@ -67,12 +70,14 @@ Ctrl-x to exit, y (yes) and enter to save.
 Then Ctrl-F5 to refresh the web interface in the browser.
 
 If you somehow broke the interface or want the default config back:
+
 如果您以某种方式破坏了接口或想要恢复默认配置：
 
 ```
 sudo rm /usr/local/share/tar1090/html/config.js
 ```
 Then run the install script again.
+
 然后再次运行安装脚本。
 
 
@@ -191,7 +196,7 @@ Everything with 2 3 and 4 engines: .2.|.3.|.4.
 
 See [README-query.md](README-query.md)
 
-## Multiple instances  多实例
+## Multiple instances  多个实例
 
 The script can install multiple instances, this is accomplished by first editing `/etc/default/tar1090_instances`:
 该脚本可以安装多个实例，首先需编辑
@@ -276,7 +281,7 @@ To display tar1090 at /, add an instance as described above that has the name we
 It will be available at /
 
 
-## nginx configuration 配置
+## nginx configuration  NGINX 配置
 
 If nginx is installed, the install script should give you a configuration file
 you can include.  The configuration needs to go into the appropriate server { }
@@ -393,7 +398,7 @@ alternative display style: &realHeat
 <https://github.com/wiedehopf/zstddec-tar1090>
 
 
-## NO WARRANTY - Excerpt from the License: 免责声明
+## NO WARRANTY  免责声明
 
    BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
 FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN
