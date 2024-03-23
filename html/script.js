@@ -3458,8 +3458,13 @@ function refreshHighlighted() {
     jQuery("#highlighted_altitude").text(format_altitude_long(highlighted.altitude, highlighted.vert_rate, DisplayUnits));
 
 	
-    jQuery('#highlighted_route').text(highlighted.routeString);			// 增加悬停高亮显示航线参数 highlighted_route（index。html里需同步添加）
+	
+    jQuery('#highlighted_route').text(highlighted.routeString);			// 增加悬停高亮显示航线参数 highlighted_route（index.html里需同步添加）
+	
+    jQuery('#highlighted_sitedist').text(format_distance_long(highlighted.sitedist, DisplayUnits));		// 增加悬停高亮显示航线参数 highlighted_sitedist（index.html里需同步添加）
 
+
+	
     jQuery('#highlighted_pf_route').text(highlighted.pfRoute ? highlighted.pfRoute : 'Hex ID: ' + highlighted.icao.toUpperCase());		// 添加'Hex ID: '前缀
 
     jQuery('#highlighted_rssi').text(highlighted.rssi != null ? highlighted.rssi.toFixed(1) + ' dBFS' : "n/a");
