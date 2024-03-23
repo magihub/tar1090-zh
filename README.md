@@ -38,7 +38,9 @@ sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/ta
 Configuration should be preserved.
 
 
-## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)  配置 1：历史记录间隔和快照数/ptracks 持续时间（可选）
+## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)  
+
+配置 1：历史记录间隔和快照数/ptracks 持续时间（可选）
 
 Edit the configuration file to change the interval in seconds and number of history files saved:
 
@@ -56,7 +58,9 @@ sudo systemctl restart tar1090
 
 The duration of the history in seconds can be calculated as interval times history_size.
 
-## Configuring part 2: the web interface (optional):  配置 2 ：Web 界面（可选）：
+## Configuring part 2: the web interface (optional):  
+
+配置 2 ：Web 界面（可选）：
 
 Remove the // at the start of a line, otherwise the setting will not be used.
 
@@ -81,7 +85,7 @@ Then run the install script again.
 然后再次运行安装脚本。
 
 
-## Enable (/disable) FA links in the webinterface (打开查询功能，并改用飞常准)
+## Enable (/disable) FA links in the webinterface (打开查询功能，并改用飞常准链接)
 
 ```
 # ENABLE:  启用链接
@@ -199,7 +203,6 @@ See [README-query.md](README-query.md)
 ## Multiple instances  多个实例
 
 The script can install multiple instances, this is accomplished by first editing `/etc/default/tar1090_instances`:
-该脚本可以安装多个实例，首先需编辑
 
 On each line there must be one instance.
 First on the line the source directory where the aircraft.json is located.
@@ -281,7 +284,7 @@ To display tar1090 at /, add an instance as described above that has the name we
 It will be available at /
 
 
-## nginx configuration  NGINX 配置
+## nginx configuration  配置
 
 If nginx is installed, the install script should give you a configuration file
 you can include.  The configuration needs to go into the appropriate server { }
@@ -306,9 +309,12 @@ Don't forget to restart the nginx service.
 - Draw less points which reduces display time (higher interval, lower compute time, default 15): /tar1090/?pTracks=8&pTracksInterval=60
 
 
-## A separate instance with longer data retention for gauging range  一个单独的实例，具有更长的数据保留时间，用于测量范围
+## A separate instance with longer data retention for gauging range  
+
+一个单独的实例，具有更长的数据保留时间，用于测量范围
 
 If this seems too complicated for you or you don't want a 2nd instance, changing / adding PTRACKS=24 to the /etc/default/tar1090 configuration should also extend the history (for /?pTracks only).
+
 如果这对您来说似乎太复杂了，或者您不想要第二个实例，那么在 /etc/default/tar1090 配置中更改/添加 PTRACKS=24 也应该扩展历史记录（仅适用于 /？pTracks）。
 
 ```
