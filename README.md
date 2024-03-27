@@ -1,56 +1,51 @@
-# tar1090
+# tar1090-zh 中文版
 
 
 ![Screenshot1](https://raw.githubusercontent.com/wiedehopf/tar1090/screenshots/screenshot3.png)
 
 Provides an improved webinterface for use with ADS-B decoders readsb / dump1090-fa
 
-- Improved adjustable history
-- Show All Tracks much faster than original with many planes
-- Multiple Maps available
-- Map can be dimmed/darkened
-- Multiple aircraft can be selected
-- Labels with the callsign can be switched on and off
+提供改进的 Web 界面，可与 ADS-B 解码器 readsb / dump1090-fa 配合使用
 
-## NO WARRANTY
-
-See the bottom of this page or the LICENSE for details.
-While striving not to disrupt an existing Raspbian / Debian / Ubuntu installation, this can't be guaranteed.
-This install script assumes Raspbian / Debian / Ubunutu and will not work on systems without apt.
-
-tar1090 is not a readsb / dump1090-fa replacement, it merely adds an additional webinterface for an existing readsb or dump1090-fa installation.
-dump1090-mutability installations should work as well, aircraft details will be limited though.
-
-## Installation
+## Installation 安装中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/HLLF-FAN/tar1090-zh/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 ```
 
-## View the added webinterface
+## View the added webinterface  查看 Web 界面
 
 Click the following URL and replace the IP address with address of your Raspberry Pi:
+
+单击以下 URL，将 IP 地址替换为 Raspberry Pi 的地址：
 
 http://192.168.x.yy/tar1090
 
 If you are curious about your coverage, try this URL:
 
+如果你对你的覆盖范围感到好奇， 试试这个 
+
 http://192.168.x.yy/tar1090/?pTracks
 
-Check further down for keyboard shortcuts.
 
-## Update (same command as installation)
+
+## Update (same command as installation) 更新中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/HLLF-FAN/tar1090-zh/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 ```
 
 Configuration should be preserved.
 
 
-## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)
+## Configuration part 1: History interval and number of snapshots / ptracks duration (optional)  
+
+配置 1：历史记录间隔和快照数/ptracks 持续时间（可选）
 
 Edit the configuration file to change the interval in seconds and number of history files saved:
+
+编辑配置文件以更改时间间隔（以秒为单位）和保存的历史记录文件数：
+
 ```
 sudo nano /etc/default/tar1090
 ```
@@ -63,9 +58,13 @@ sudo systemctl restart tar1090
 
 The duration of the history in seconds can be calculated as interval times history_size.
 
-## Configuring part 2: the web interface (optional):
+## Configuring part 2: the web interface (optional):  
+
+配置 2 ：Web 界面（可选）：
 
 Remove the // at the start of a line, otherwise the setting will not be used.
+
+删除行首的 // ，否则不会使用该设置。
 
 ```
 sudo nano /usr/local/share/tar1090/html/config.js
@@ -75,42 +74,25 @@ Ctrl-x to exit, y (yes) and enter to save.
 Then Ctrl-F5 to refresh the web interface in the browser.
 
 If you somehow broke the interface or want the default config back:
+
+如果您以某种方式破坏了接口或想要恢复默认配置：
+
 ```
 sudo rm /usr/local/share/tar1090/html/config.js
 ```
 Then run the install script again.
 
-## Home / receiver location:
-
-This is set in the decoder, so readsb or dump1090-fa, if you used one of my scripts to install their readme will have further instructions on how to set the location.
-
-## Change Log
-
-The commit log on the github page is the only form of change log.
-If you can't find the commit log or don't understand what it means, you have 3 options:
-- Assume there is no update and use the currently installed version.
-- Run the update script as provided above and let it surprise you!
-- Complain about the lack of a change log and be mocked.
-
-While i make this interface available for others to install and hope you like it,
-i maintain this interface mainly for users who are curious and can figure it out themselves.
-Documentation and explanation is time consuming to do and as such i choose to limit it to the essential.
-
-## Reporting a bug
-
-If you think you have found a bug, open an issue here on github.
-Please check all the buttons and read all the tooltips before you do.
-Try deleting the browser cache for the tar1090 page.
+然后再次运行安装脚本。
 
 
-## Enable (/disable) FA links in the webinterface (previously enabled by default)
+## Enable (/disable) FA links in the webinterface (打开查询功能，并改用飞常准链接)
 
 ```
-# ENABLE:
+# ENABLE:  启用链接
 sudo sed -i -e 's?.*flightawareLinks.*?flightawareLinks = true;?' /usr/local/share/tar1090/html/config.js
 # ENABLE if the above doesn't work (updated from previous version)
 echo 'flightawareLinks = true;' | sudo tee -a /usr/local/share/tar1090/html/config.js
-# DISABLE:
+# DISABLE:  禁用链接
 sudo sed -i -e 's?.*flightawareLinks.*?flightawareLinks = false;?' /usr/local/share/tar1090/html/config.js
 ```
 
@@ -155,30 +137,31 @@ After that run the install script and it should work.
 978 should be disabled in the config file for this configuration.
 UAT traffic will be displayed as ADS-B, this can't be avoided.
 
-### Installation / Update to work with another folder, for example /run/combine1090
+### Installation / Update to work with another folder, for example /run/combine1090  与其他文件夹共用
 
 
 ```
-wget -nv -O /tmp/install.sh https://github.com/wiedehopf/tar1090/raw/master/install.sh
+wget -nv -O /tmp/install.sh https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh
 sudo bash /tmp/install.sh /run/combine1090
 ```
 
-## Remove / Uninstall
+## Remove / Uninstall   卸载中文版
 
 ```
-sudo bash -c "$(wget -nv -O - https://github.com/wiedehopf/tar1090/raw/master/uninstall.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/uninstall.sh)"
 ```
 
-## Using the filters
+## Using the filters   使用过滤器
 
 js regex format, some basics (much more extensive issue available online on javascript regex syntax):
+JS 正则表达式格式，一些基础知识
 
 - a single `.` is the wildcard for exactly one character
 - multiple patterns can be combined with or: `|`
 
 ### Some examples of useful constructs:
 
-#### Filter by type code:
+#### Filter by type code:    按类型代码筛选
 
 ```
 B737 family: B73. (B73 and any character in the fourth position)
@@ -191,7 +174,7 @@ Exclude a certain type: ^(?!A320)
 Exclude multiple patterns: ^(?!(A32.|B73.))
 ```
 
-#### Filter by type description:
+#### Filter by type description:   按类型描述筛选
 
 ```
 Helicopters: H..
@@ -201,12 +184,11 @@ Helicopters any number of turbin engines : H.T
 All turboprop powered things, including turbine helicopters: ..T
 Everything with 4 engines: .4.
 Everything with 2 3 and 4 engines: .2.|.3.|.4.
-```
+``` 
 
-## Keyboard Shortcuts
+## Keyboard Shortcuts  键盘快捷键
 
-
-- Q and E zoom out and in.
+- Q and E zoom out and in. 
 - A and D move West and East.
 - W and S move North and South.
 - C or Esc clears the selection.
@@ -214,11 +196,11 @@ Everything with 2 3 and 4 engines: .2.|.3.|.4.
 - T selects all aircraft
 - B toggle map brightness
 
-## URL query parameters (/tar1090/?icao=123456&zoom=5 and similar)
+## URL query parameters 查询参数 (/tar1090/?icao=123456&zoom=5 and similar)
 
 See [README-query.md](README-query.md)
 
-## Multiple instances
+## Multiple instances  多个实例
 
 The script can install multiple instances, this is accomplished by first editing `/etc/default/tar1090_instances`:
 
@@ -302,8 +284,7 @@ To display tar1090 at /, add an instance as described above that has the name we
 It will be available at /
 
 
-
-## nginx configuration
+## nginx configuration  配置
 
 If nginx is installed, the install script should give you a configuration file
 you can include.  The configuration needs to go into the appropriate server { }
@@ -315,44 +296,8 @@ include /usr/local/share/tar1090/nginx-tar1090.conf;
 in the server { } section of either `/etc/nginx/sites-enabled/default` or `/etc/nginx/conf.d/default.conf` depending on your system configuration.
 Don't forget to restart the nginx service.
 
-## heywhatsthat.com range outline:
 
-To judge the actual range (/?pTracks, see next chapter), one needs to first know what kind of range is even possible for the receiver location. 1090 MHz reception requires a direct line of sight through air to what you want to receive, thus depends on obstacles and the curvature of the earth. To get that theoretical range for a location, follow the guide in this chapter.
-
-#### 1: Create panorama and look at your outline on the heywhatsthat page
-- Visit http://www.heywhatsthat.com/
-- Click "New Panorama"
-- Set the location for your antenna precisely
-- Enter a title / submit the request and wait for it to finish
-- Scroll down to the map, look at the buttons in the top right of the map
-- Use the "up in the air" button on the map, reduce map magnification
-- You can change the altitudes (ft) below the map to view different outlines for your location
-- Those outlines tell you how far you can receive aircraft at the associated altitudes
-- The panorama does not take into account obstacles closer to the antenna than approximately 100 ft, trees are also not considered but can block reception
-
-#### 2: Integrate theoretical range outline into your local tar1090 display
-- For use on the tar1090 map the altitude will be set by changing the download URL
-- Near the top of the page, an URL for the panorama is mentioned.
-- Replace the XXXXXX in the following command with the ID contained in your panorama URL, then run the command on your pi:
-```
-sudo /usr/local/share/tar1090/getupintheair.sh XXXXX
-```
-- You should now have a range outline for the theoretical range for aircraft at 40000 ft on your tar1090 map
-
-- It might be interesting to compare to http://192.168.x.yy/tar1090/?pTracks which will by default will display the last 8 hours of traces.
-
-- More options for loading multiple outlines and for a different instance
-```
-# load two outlines, 10000 ft and 40000 ft
-sudo /usr/local/share/tar1090/getupintheair.sh XXXXX 3048,12192
-# load a 10000 ft outline for the tar1090 instance located at /978
-sudo /usr/local/share/tar1090/getupintheair.sh XXXXX 3048 978
-
-# load a 40000 ft outline for the tar1090 instance located at /adsbx
-sudo /usr/local/share/tar1090/getupintheair.sh XXXXX 12192 adsbx
-```
-
-## /tar1090/?pTracks
+## /tar1090/?pTracks  轨迹查询
 
 ![Screenshot2](https://raw.githubusercontent.com/wiedehopf/tar1090/screenshots/screenshot4.png)
 
@@ -363,64 +308,14 @@ sudo /usr/local/share/tar1090/getupintheair.sh XXXXX 12192 adsbx
 - Restrict the duration shown to 2 hours: /tar1090/?pTracks=2
 - Draw less points which reduces display time (higher interval, lower compute time, default 15): /tar1090/?pTracks=8&pTracksInterval=60
 
-## 0800-DESTROY-SD-CARD
 
-History function as used for globe.adsbexchange.com
-(destroy sd-card is a bit of a joke but obviously it will use disk space and create quite a few files, they will be kept indefinitely so if the folder grows to big you'll have to delete old files yourself)
+## A separate instance with longer data retention for gauging range  
 
-This is not in any way or form officially supported and you should consider it experimental.
-To accomplish this, you need to use the dev branch of my readsb repository.
-(https://github.com/wiedehopf/adsb-wiki/wiki/Building-readsb-from-source#wiedehopfs-dev-branch)
-
-The following command line options need to be added to for example the decoder options in `/etc/default/readsb`
-```
---write-json-globe-index --write-globe-history /var/globe_history --heatmap 30
-```
-/var/globe_history needs to be a directory writeable by the user readsb.
-`sudo mkdir /var/globe_history` and `sudo chown readsb /var/globe_history` are useful for that.
-
-You should also download
-```
-wget -O /usr/local/share/tar1090/aircraft.csv.gz https://github.com/wiedehopf/tar1090-db/raw/csv/aircraft.csv.gz
-```
-
-and add this command line option (for exaple via /etc/default/readsb):
-```
---db-file /usr/local/share/tar1090/aircraft.csv.gz
-```
-
-You will also need to point tar1090 to /run/readsb in case you are using another dump1090/readsb.
-See the "multiple instances" readme section.
-
-If you don't want readsb to read data from the SDR, you'll also need to change the receiver options line to something like this:
-```
-RECEIVER_OPTIONS="--net-only --net-connector 192.168.2.7,30005,beast_in"
-```
-If you have another dump1090/readsb running on the same machine, you'll also need to change all the ports to avoid conflicts.
-
-This will obviously write data to the hard drive, be aware of that.
-The data format is subject to change, don't expect this to be stable.
-Be aware of that when upgrading either tar1090 or readsb to a new commit.
-
-For these features i only maintain the nginx configuration, not the lighttpd configuration.
-Thus you'll need to use nginx with the config file provided by the tar1090 install script
-or change the lighttpd configuration yourself.
-On the default nginx install you'll usually find the server section in this config file:
-`/etc/nginx/sites-enabled/default`
-
-If you can't figure out how to make it work with the above information, please don't ask.
-I don't support this feature for the general user base.
-This information is only for people who could figure it out from the source code anyhow,
-so that they don't have to spend as much time figuring it out.
-
-If you're using --write-json-globe-index with tar1090, you might be interested in tar1090
-using the readsb API to get data, it's less requests and usually more efficient,
-for details see the file nginx-readsb-api.conf
-(this needs adding to your existing nginx tar1090 configuration, this is only for people who really know their stuff anyway)
-
-## A separate instance with longer data retention for gauging range
+一个单独的实例，具有更长的数据保留时间，用于测量范围
 
 If this seems too complicated for you or you don't want a 2nd instance, changing / adding PTRACKS=24 to the /etc/default/tar1090 configuration should also extend the history (for /?pTracks only).
+
+如果这对您来说似乎太复杂了，或者您不想要第二个实例，那么在 /etc/default/tar1090 配置中更改/添加 PTRACKS=24 也应该扩展历史记录（仅适用于 /？pTracks）。
 
 ```
 sudo nano /etc/default/tar1090_instances
@@ -438,13 +333,13 @@ put in these two lines if you're using dump1090-fa
 /run/dump1090-fa persist
 ```
 
-if you then run the tar1090 install script afterwards you'll have an extra instance you can configure the history retention for.
+if you then run the tar1090 install script afterwards you'll have an extra instance you can configure the history retention for.   中文版
 ```
-sudo bash -c "$(wget -nv -O - https://github.com/wiedehopf/tar1090/raw/master/install.sh)"
+sudo bash -c "$(wget -nv -O - https://gh-proxy.com/https://github.com/magihub/tar1090-zh/raw/master/install.sh)"
 sudo nano /etc/default/tar1090-persist
 ```
 
-change to these values for 24h of history:
+change to these values for 24h of history:  改为24h历史记录
 
 ```
 # Interval at which the track history is saved
@@ -470,23 +365,7 @@ sudo cp /usr/local/share/tar1090/html/upintheair.json /usr/local/share/tar1090/h
 ```
 
 
-## history not loading issue (possible fix)
-
-For a day or so i had a bug in the install script turning symbolic links in /etc/lighttpd/conf-enabled into copies of the files they were pointing to.
-
-This can cause some other issues with my install script which fiddles with the lighttpd config files to make mod_setenv work.
-
-Anyhow if just rerunning the install script does not fix your history loading issue, you can try this:
-
-```
-cd /etc/lighttpd/conf-enabled
-for i in *; do if [ -f "../conf-available/$i" ]; then sudo ln -s -f "../conf-available/$i" $i; fi; done
-```
-
-After that rerun the install script.
-If you still have history loading issues, get back to me via the github issues or the various forums i frequent.
-
-## readsb wiedehopf fork --heatmap feature:
+## readsb wiedehopf fork --heatmap feature:  热图功能
 
 /var/globe_history needs to be a directory writeable by the user readsb.
 `sudo mkdir /var/globe_history` and `sudo chown readsb /var/globe_history` are useful for that.
@@ -495,6 +374,7 @@ Add readsb options:
 ```
 --heatmap-dir /var/globe_history --heatmap 30
 ```
+
 
 ## heatmap in conjunction with readsb wiedehopf fork --heatmap feature:
 
@@ -513,17 +393,20 @@ alternative display style: &realHeat
 - blurryness: &heatBlur=2
 - weight of each dot for the heatmap: &heatWeight=4
 
-## offline map
+
+## offline map   离线地图
 
 <https://github.com/adsbxchange/wiki/wiki/tar1090-offline-map>
+
 
 ## Uses this library for decompressing zstd
 
 <https://github.com/wiedehopf/zstddec-tar1090>
 
-## NO WARRANTY - Excerpt from the License:
 
-  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+## NO WARRANTY  免责声明
+
+   BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
 FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN
 OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
 PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED
@@ -532,3 +415,5 @@ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS
 TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE
 PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,
 REPAIR OR CORRECTION.
+
+  由于该程序是免费许可的，因此在适用法律允许的范围内，该程序不提供任何保证。除非另有书面说明，否则版权所有者和/或其他方“按原样”提供程序，不作任何明示或暗示的保证，包括但不限于对适销性和特定用途适用性的暗示保证。有关程序质量和性能的全部风险由您承担。如果程序被证明有缺陷，您将承担所有必要的服务、维修或纠正费用。

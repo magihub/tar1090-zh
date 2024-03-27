@@ -231,7 +231,8 @@ BingMapsAPIKey = null;
 // imageConfigLink = "";
 // imageConfigText = "";
 
-//flightawareLinks = false;
+// 启用 FA 网站（包括 非常值）查询链接功能
+flightawareLinks = true;
 //shareBaseUrl = 'https://globe.adsbexchange.com/';
 // planespottersLinks = false;
 
@@ -292,9 +293,9 @@ HideCols = [
 // get pictures from planespotting.be
 // planespottingAPI = true;
 
-// get flight route from routeApi service
+// get flight route from routeApi service     航线 API 启用
 useRouteAPI = true;
-// which routeApi service to use
+// which routeApi service to use              航线 API 来源
 routeApiUrl = "https://api.adsb.lol/api/0/routeset";
 
 // show a link to jetphotos, only works if planespottersAPI is disabled
@@ -372,3 +373,6 @@ tableColors = {
 //prefer978 = 0;
 //
 // dynGlobeRate = false; // enable use of globeRates.json in index.html directory to steer client refresh rate
+
+// OpenStreetMap 离线地图等级
+offlineMapDetail=9;

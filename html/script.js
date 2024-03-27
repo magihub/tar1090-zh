@@ -1242,7 +1242,8 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesLive",
-        display: "实时航迹标签：UTC协调世界时",
+        display: "实时航迹标签：UTC时间",
+ //       display: "实时航迹标签：UTC协调世界时",		
         container: "#settingsLeft",
         init: utcTimesLive,
         setState: function(state) {
@@ -1254,7 +1255,8 @@ jQuery('#selected_altitude_geom1')
 
     new Toggle({
         key: "utcTimesHistoric",
-        display: "历史航迹标签：UTC协调世界时",
+ //       display: "历史航迹标签：UTC协调世界时",
+        display: "历史航迹标签：UTC时间",		
         container: "#settingsLeft",
         init: utcTimesHistoric,
         setState: function(state) {
@@ -3032,7 +3034,9 @@ function refreshSelected() {
     }
 
     if (flightawareLinks) {
-        jQuery('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));
+        jQuery('#selected_flightaware_link').html(getFlightAwareLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建FA函数		
+        jQuery('#selected_variflight_link').html(getVariFlightLink(selected.icao, selected.flight, selected.registration, selected.name));	// 替换新建飞常准函数
+     //   jQuery('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));		
     }
 
     if (selected.isNonIcao() && selected.source != 'mlat') {
@@ -3056,7 +3060,7 @@ function refreshSelected() {
             if (flightawareLinks) {
                 jQuery('#selected_registration').html(getFlightAwareIdentLink(selected.registration, selected.registration));
             } else if (registrationLinks && registrationLink(selected)) {
-                jQuery('#selected_registration').html(`<a class="link" target="_blank" href="${registrationLink(selected)}">${selected.registration}</a>`);
+               jQuery('#selected_registration').html(`<a class="link" target="_blank" href="${registrationLink(selected)}">${selected.registration}</a>`);										
             } else {
                 jQuery('#selected_registration').updateText(selected.registration);
             }
@@ -3070,9 +3074,11 @@ function refreshSelected() {
     if (selected.pia)
         dbFlags += '<a class="link" target="_blank" href="https://www.faa.gov/air_traffic/technology/equipadsb/privacy/" rel="noreferrer">PIA</a> / ';
     if (selected.military)
-        dbFlags += 'military / ';
+        dbFlags += '军机 / ';							// 数据库标识 military
+    //    dbFlags += 'military / ';	
     if (dbFlags.length == 0) {
-        jQuery('#selected_dbFlags').updateText("none");
+        jQuery('#selected_dbFlags').updateText("无");			   // 数据库标识 none
+   //     jQuery('#selected_dbFlags').updateText("none");		
     } else {
         jQuery('#selected_dbFlags').html(dbFlags.slice(0, -3));
     }
@@ -3451,7 +3457,15 @@ function refreshHighlighted() {
 
     jQuery("#highlighted_altitude").text(format_altitude_long(highlighted.altitude, highlighted.vert_rate, DisplayUnits));
 
-    jQuery('#highlighted_pf_route').text((highlighted.pfRoute ? highlighted.pfRoute : highlighted.icao.toUpperCase()));
+	
+	
+    jQuery('#highlighted_route').text(highlighted.routeString);			// 增加悬停高亮显示航线参数 highlighted_route（index.html里需同步添加）
+	
+    jQuery('#highlighted_sitedist').text(format_distance_long(highlighted.sitedist, DisplayUnits));		// 增加悬停高亮显示航线参数 highlighted_sitedist（index.html里需同步添加）
+
+
+	
+    jQuery('#highlighted_pf_route').text(highlighted.pfRoute ? highlighted.pfRoute : 'Hex ID: ' + highlighted.icao.toUpperCase());		// 添加'Hex ID: '前缀
 
     jQuery('#highlighted_rssi').text(highlighted.rssi != null ? highlighted.rssi.toFixed(1) + ' dBFS' : "n/a");
 }
@@ -3537,8 +3551,9 @@ function refreshFeatures() {
     cols.icao = {
         text: '十六进制ID',
         sort: function () { sortBy('icao', compareAlpha, function(x) { return x.icao; }); },
-        value: function(plane) { return plane.icao; },
-        td: '<td class="icaoCodeColumn">',
+        value: function(plane) { return plane.icao.toUpperCase(); },   // .toUpperCase()强制大写显示
+     //  value: function(plane) { return plane.icao; },				// 原不注释时，为大写
+     //   td: '<td class="icaoCodeColumn">',						//  但是字体变成宋体
     };
     cols.flag = {
         text: '旗帜',
@@ -3552,8 +3567,10 @@ function refreshFeatures() {
         sort: function () { sortBy('flight', compareAlpha, function(x) { return x.flight }); },
         value: function(plane) {
             if (flightawareLinks)
-                return getFlightAwareModeSLink(plane.icao, plane.flight, plane.name);
-            return (plane.flight || '');
+                return getVariFlightLink(plane.icao, plane.flight, plane.registration, plane.name);		//替换新建飞常准函数				
+            //    return getFlightAwareLink(plane.icao, plane.flight, plane.registration, plane.name);		//替换新建FlightAware函数
+			    //    return getFlightAwareModeSLink(plane.icao, plane.flight, plane.name);			原作者采用modes链接
+		return (plane.flight || '');
         },
         html: flightawareLinks,
         text: '呼号' };
@@ -3563,7 +3580,7 @@ function refreshFeatures() {
             value: function(plane) {
                 return ((useRouteAPI && plane.routeString) || '');
             },
-            text: '路线' };
+            text: '航线' };
     }
     cols.registration = {
         sort: function () { sortBy('registration', compareAlpha, function(x) { return x.registration; }); },
@@ -3643,10 +3660,10 @@ function refreshFeatures() {
         value: function(plane) { return format_data_source(plane.getDataSource()); },
         align: 'right' };
     cols.military = {
-        text: 'Mil.',
+        text: '军',				//  右侧边栏 Mil 军用标识从 Yes No 改为 仅提示军机为“Y”（是）
         sort: function () { sortBy('military', compareAlpha, function(x) { return (x.military ? 'yes' : 'no'); } ); },
-        value: function(plane) { return (plane.military ? 'yes' : 'no'); },
-        align: 'right' };
+        value: function(plane) { return (plane.military ? 'Y' : ''); },
+        align: 'center' };		//  默认右侧 改为居中
     cols.wd = {
         text: '风向',
         sort: function () { sortBy('wd', compareNumeric, function(x) { return x.wd; }); },
@@ -4843,17 +4860,6 @@ function updateAltFilter() {
     }
 }
 
-function getFlightAwareIdentLink(ident, linkText) {
-    if (ident !== null && ident !== "") {
-        if (!linkText) {
-            linkText = ident;
-        }
-        return '<a class="link" target="_blank" href="https://flightaware.com/live/flight/' + ident.trim() + '" rel="noreferrer">' + linkText + '</a>';
-    }
-
-    return "";
-}
-
 function onResetSourceFilter(e) {
     jQuery('#sourceFilter .ui-selected').removeClass('ui-selected');
 
@@ -5043,12 +5049,88 @@ function initFilters() {
 
 
 
+function getFlightAwareIdentLink(ident, linkText) {					//  此ident为注册号
+    if (ident !== null && ident !== "") {
+        if (!linkText) {
+            linkText = ident;
+        }
+        return '<a class="link" target="_blank" href="https://flightaware.com/live/flight/' + ident.trim() + '" rel="noreferrer">' + linkText + '</a>';
+    }
+
+    return "";
+}
 
 
-function getFlightAwareModeSLink(code, ident, linkText) {
+
+function getFlightAwareLink(icao, callsign, registration, linkText) {				//  新建 FA 网站 getFlightAwareLink 获取HEX ID、呼号、注册号、链接显示文本
+    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000" && icao !== "00000000") {
+        if (!linkText) {																
+            linkText =  "h: " + icao.toUpperCase() + "";				//修改 linkText 为空时，显示文本改为：显示带前后缀的ICAO HEX ID		
+        }
+
+          let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"";			
+		  // 因FA无法查询仅有ICAO号的航班，故暂修改初始链接为空值，
+		  //实测为新开窗口跳转到本地IP/tar1090/，若linkText = icao.toUpperCase()，则跳转本地IP/tar1090/?icao=hexid（icao号），即单独查询该飞机
+		  
+       //   let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/modes/" + icao + "/redirect";
+		
+        if (callsign != null && callsign !== "") {
+         linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + callsign.trim();
+		 
+        } else if (registration != null && registration !== "") {
+			linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + registration.trim();
+			 
+			if (linkText ==  "h: " + icao.toUpperCase() + "") { 
+			linkText =  "r: " + registration.toUpperCase() + ""; 	// 改为显示带前后缀的注册号
+			}		
+        }
+		
+        linkHtml += "\" rel=\"noreferrer\">" + linkText + "</a>";
+        return linkHtml;
+    }
+
+    return "";
+}
+
+
+
+function getVariFlightLink(icao, callsign, registration, linkText) {				//  新建 飞常准网站 getVariFlightLink 获取HEX ID、呼号、注册号、链接显示文本
+    if (icao !== null && icao.length > 0 && icao[0] !== '~' && icao !== "000000" && icao !== "00000000") {
+        if (!linkText) {																
+            linkText =  "h: " + icao.toUpperCase() + "";				//修改 linkText 为空时，显示文本改为：显示带前后缀的ICAO HEX ID		
+        }
+
+          let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"";			
+		  // 因飞常准也无法查询仅有ICAO号的航班，故暂修改初始链接为空值，
+		  //实测为新开窗口跳转到本地IP/tar1090/，若linkText = icao.toUpperCase()，则跳转本地IP/tar1090/?icao=hexid（icao号），即单独查询该飞机
+
+		
+        if (callsign != null && callsign !== "") {
+         linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightadsb.variflight.com/tracker/" + callsign.trim();
+		 
+        } 
+/*	*/	
+		else if (registration != null && registration !== "") {			//	飞常准不支持按注册号查询，仍保留FA查询注册号
+			linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/flight/" + registration.trim();
+			 
+			if (linkText ==  "h: " + icao.toUpperCase() + "") { 
+			linkText =  "r: " + registration.toUpperCase() + ""; 	// 改为显示带前后缀的注册号
+			}		
+        }
+		
+        linkHtml += "\" rel=\"noreferrer\">" + linkText + "</a>";
+        return linkHtml;
+    }
+
+    return "";
+}
+
+
+function getFlightAwareModeSLink(code, ident, linkText) {				//  此ident为呼号
     if (code !== null && code.length > 0 && code[0] !== '~' && code !== "000000") {
         if (!linkText) {
-            linkText = "FlightAware: " + code.toUpperCase();
+            linkText =  "" + code.toUpperCase();				//修改 modes 时链接文本前的"FlightAware: "前缀为“0x:”，仅显示ICAO HEX ID
+        //    linkText = "FlightAware: " + code.toUpperCase();			
         }
 
         let linkHtml = "<a class=\"link\" target=\"_blank\" href=\"https://flightaware.com/live/modes/" + code ;
@@ -5061,6 +5143,8 @@ function getFlightAwareModeSLink(code, ident, linkText) {
 
     return "";
 }
+
+
 
 function getPhotoLink(ac) {
     if (jetphotoLinks) {
@@ -8308,7 +8392,8 @@ function setSelectedIcao() {
         return;
     }
     selIcao = selected.icao;
-    let hex_html = "<span style='font-family: monospace;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";
+    let hex_html = "<span class=identSmall>Hex ID:" + NBSP + selected.icao.toUpperCase() + "</span>";
+ //   let hex_html = "<span style='font-family: monospace;' class=identSmall>Hex:" + NBSP + selected.icao.toUpperCase() + "</span>";	
     if (globeIndex || shareBaseUrl) {
         if (copiedIcao && (copiedIcao != selected.icao || new Date().getTime() - copyLinkTime > 2000)) {
             copiedIcao = null;
