@@ -113,21 +113,7 @@ function createBaseLayers() {
 
     if (!adsbexchange) {
         mapmap.push(new ol.layer.Tile({
-			   
-															   
-		  
-								  
-																   
-									  
-	 
-
-						
-									   
-									   
-																																			  
-											  
-											   
-            source: new ol.source.XYZ({
+			source: new ol.source.XYZ({
                 url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 attributions: 'Powered by <a href="https://www.esri.com">Esri.com</a>' +
                     '— Sources: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
@@ -145,12 +131,13 @@ function createBaseLayers() {
 
     mapmap.push(new ol.layer.Tile({
         source: new ol.source.OSM({
+/*
             "url": "https://gac-geo.googlecnapps.cn/maps/vt?lyrs=m&x={x}&y={y}&z={z}",
+*/			
+            "url": "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
             attributionsCollapsible: false,
             maxZoom: 19,
             transition: tileTransition,
-									   
-																																							
         }),
         name: 'googlemap - new',
         title: 'Google Map - 矢量',
@@ -176,12 +163,13 @@ function createBaseLayers() {
 
     mapmap.push(new ol.layer.Tile({
         source: new ol.source.OSM({
+/*
             "url": "https://gac-geo.googlecnapps.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}",
+*/			
+            "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
             attributionsCollapsible: false,
             maxZoom: 19,
             transition: tileTransition,
-																   
-															 
         }),
         name: 'googlemap',
         title: 'Google Map - 卫星',
@@ -191,18 +179,18 @@ function createBaseLayers() {
 
     mapmap.push(new ol.layer.Tile({
         source: new ol.source.OSM({
+/*
             "url": "https://gac-geo.googlecnapps.cn/maps/vt?lyrs=s,m&gl=CN&x={x}&y={y}&z={z}",
+*/			
+            "url": "https://mt1.google.com/vt/lyrs=s,m&gl=CN&x={x}&y={y}&z={z}",			
             attributionsCollapsible: false,
             maxZoom: 19,
             transition: tileTransition,
-							
-						  
         }),
         name: 'googlemap',
         title: 'Google Map - 卫星地名',
         type: 'base',
     }));
-															  
     if (adsbexchange) {
         mapmap.push(new ol.layer.Tile({
             source: new ol.source.OSM({
@@ -242,9 +230,6 @@ function createBaseLayers() {
             type: 'base',
         }));
     }
-									 
-										   
-			   
     if (loStore['bingKey'] != undefined)
         BingMapsAPIKey = loStore['bingKey'];
 
